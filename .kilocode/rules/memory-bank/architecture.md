@@ -14,7 +14,7 @@ La arquitectura del proyecto Logikia se basa en la plantilla "ScrewFast", que ut
   - `blog/`: Para artículos de blog y marketing de contenidos.
   - `products/`: Para las páginas de detalle de productos/servicios.
   - `insights/`: Contenido similar al blog.
-  - `docs/`: Utilizado por Starlight para la sección de "blog/insights" y cualquier documentación de apoyo.
+  - `docs/`: Utilizado por Starlight para la sección de "blog/insights" y cualquier documentación para el usuario final.
 - `src/pages/`: Define las rutas del sitio. Las páginas aquí pueden usar componentes de `src/components/` para construir la interfaz.
 - `astro.config.mjs`: El corazón de la configuración del proyecto, donde se definen las integraciones (Starlight, Tailwind, etc.) y el comportamiento del sitio.
 
