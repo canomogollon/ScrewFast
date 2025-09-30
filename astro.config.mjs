@@ -68,6 +68,10 @@ export default defineConfig({
           autogenerate: { directory: "guides" },
         },
         {
+          label: "Knowledge Base",
+          autogenerate: { directory: "knowledge-base" },
+        },
+        {
           label: "Tools & Equipment",
           items: [
             { label: "Tool Guides", link: "tools/tool-guides/" },
