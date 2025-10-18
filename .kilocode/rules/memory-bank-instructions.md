@@ -44,6 +44,11 @@ The Memory Bank consists of core files and optional context files, all in Markdo
    - Dependencies
    - Tool usage patterns
 
+6. `mcp.md` (si aplica)
+   - Servidores MCP específicos del proyecto
+   - Propósito y herramientas clave
+   - Enlace a la configuración (`.kilocode/mcp.json`)
+
 ### Additional Files
 
 Create additional files/folders within memory-bank/ when they help organize:
@@ -55,6 +60,56 @@ Create additional files/folders within memory-bank/ when they help organize:
 - Testing strategies
 - Deployment procedures
 
+### Steps Documentation
+
+Create detailed implementation plans in `.kilocode/steps/` folder for complex tasks before implementation. This serves as a blueprint and prevents hallucinations by documenting the exact approach before coding.
+
+#### When to Create Steps
+
+Create step documentation for:
+
+- Complex feature implementations
+- Integration of new libraries or dependencies
+- Major refactoring tasks
+- Multi-file modifications
+- Troubleshooting complex issues
+
+#### Step File Structure
+
+Each step file should include:
+
+1. **Problem Identification**: Clear description of what needs to be solved
+2. **Proposed Solution**: Detailed approach with specific file modifications
+3. **Implementation Steps**: Ordered list of actions to take
+4. **Code Examples**: Exact code snippets to be implemented
+5. **Testing Strategy**: How to verify the implementation works
+6. **Troubleshooting**: Common issues and their solutions
+7. **Success Metrics**: Checklist to verify completion
+
+#### Step File Naming
+
+Use descriptive names following the standard pattern: **`tema-categoría-descripción.md`**
+
+The complete categorization system is defined in [CATEGORIES_STANDARD.md](../steps/CATEGORIES_STANDARD.md).
+
+Examples by category:
+
+- **Implementation**: `aos-implementation-initial.md`, `jarallax-implementation-parallax.md`
+- **Migration**: `aos-migration-from-taos.md`, `taos-migration-to-aos.md`
+- **Fix**: `aos-fix-blink-issues.md`, `tiny-slider-fix-import.md`
+- **Guide**: `aos-guide-migration.md`, `jarallax-guide-configuration.md`
+- **Summary**: `aos-summary-migration.md`, `jarallax-summary-implementation.md`
+
+For detailed category definitions and decision matrices, see the complete [CATEGORIES_STANDARD.md](../steps/CATEGORIES_STANDARD.md) documentation.
+
+#### Step Workflow
+
+1. **Plan**: Create the step file before any code changes
+2. **Review**: Validate the approach before implementation
+3. **Implement**: Follow the documented steps exactly
+4. **Verify**: Test against the success metrics
+5. **Archive**: Keep the file for future reference
+
 ## Core workflows
 
 ### Memory Bank Initialization
@@ -63,12 +118,12 @@ The initialization step is CRITICALLY IMPORTANT and must be done with extreme th
 
 When user requests initialization of the memory bank (command `initialize memory bank`), I'll perform an exhaustive analysis of the project, including:
 
-- All source code files and their relationships
-- Configuration files and build system setup
-- Project structure and organization patterns
-- Documentation and comments
-- Dependencies and external integrations
-- Testing frameworks and patterns
+- All source code files and their relationships.
+- Configuration files (`astro.config.ts`, `tailwind.config.js`, etc.) and build system setup.
+- Project structure and organization patterns.
+- Dependencies, external integrations, and available tools (including MCP servers).
+- Documentation, comments, and existing `steps` or `memory-bank` files.
+- Testing frameworks and patterns.
 
 I must be extremely thorough during initialization, spending extra time and effort to build a comprehensive understanding of the project. A high-quality initialization will dramatically improve all future interactions, while a rushed or incomplete initialization will permanently limit my effectiveness.
 
@@ -87,10 +142,11 @@ If I notice significant changes that should be preserved but the user hasn't exp
 
 To execute Memory Bank update, I will:
 
-1. Review ALL project files
-2. Document current state
-3. Document Insights & Patterns
-4. If requested with additional context (e.g., "update memory bank using information from @/Makefile"), focus special attention on that source
+1. Review ALL project files, paying special attention to configuration files (`package.json`, `astro.config.ts`, etc.) to detect changes in dependencies or build setup.
+2. Verify the exact names and paths of configuration files, as they may change between versions (e.g., `.js` vs `.cjs` vs `.ts`).
+3. Document the current state of the project in `context.md`.
+4. Document new insights, patterns, or architectural decisions in the relevant files (`tech.md`, `architecture.md`, etc.).
+5. If requested with additional context (e.g., "update memory bank using information from @/Makefile"), focus special attention on that source.
 
 Note: When triggered by **update memory bank**, I MUST review every memory bank file, even if some don't require updates. Focus particularly on context.md as it tracks current state.
 

@@ -1,9 +1,63 @@
 {
   "mcpServers": {
-    "astrodocs": {
+    "Astro docs": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://mcp.docs.astro.build/mcp"]
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.docs.astro.build/mcp"
+      ],
+      "alwaysAllow": [
+        "search_astro_docs"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp@0.0.38",
+        "--browser=chrome",
+        "--headless",
+        "--viewport-size=1280,720"
+      ],
+      "disabled": false,
+      "alwaysAllow": [
+        "playwright_navigate",
+        "playwright_screenshot",
+        "playwright_click",
+        "playwright_fill",
+        "playwright_select",
+        "playwright_hover",
+        "playwright_evaluate",
+        "browser_navigate",
+        "browser_click",
+        "browser_evaluate",
+        "browser_wait_for"
+      ],
+      "env": {
+        "PLAYWRIGHT_BROWSERS_PATH": "0"
+      }
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-puppeteer"
+      ],
+      "disabled": false,
+      "alwaysAllow": [
+        "puppeteer_navigate",
+        "puppeteer_screenshot",
+        "puppeteer_click",
+        "puppeteer_fill",
+        "puppeteer_select",
+        "puppeteer_hover",
+        "puppeteer_evaluate"
+      ],
+      "env": {
+        "PUPPETEER_EXECUTABLE_PATH": "/usr/bin/google-chrome"
+      }
     }
   }
 }

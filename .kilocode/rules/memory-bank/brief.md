@@ -2,11 +2,11 @@
 
 ## Descripción General
 
-Proyecto Logikia es el sitio web basado en la plantilla <https://github.com/mearashadowfax/ScrewFast> usando  AstroJS y Starlight para la documentacion viva para los usuarios, diseñado para proporcionar una experiencia de navegacion y comercializacion exitosa de los productos/servicios de LOGIKIA con soporte multilingüe EN/ES.
+Proyecto Logikia es el sitio web basado en la plantilla <https://github.com/mearashadowfax/ScrewFast> usando  AstroJS y Starlight para la documentacion viva para los usuarios finales/externos, diseñado para proporcionar una experiencia de navegacion y comercializacion exitosa de los productos/servicios de LOGIKIA con soporte multilingüe EN/ES.
 
 ## Objetivos Principales
 
-- Proporcionar una plataforma moderna, escalble, veloz y eficiente para mostrar los productos/servicios de la empresa
+- Proporcionar una plataforma moderna, escalable, veloz y eficiente para mostrar los productos/servicios de la empresa
 - Soportar múltiples idiomas para alcance global
 - Facilitar la gestión del conocimiento del proyecto a través de una memory bank centralizada
 - Ofrecer una experiencia de usuario optimizada con AstroJS
@@ -32,4 +32,4 @@ Proyecto Logikia es el sitio web basado en la plantilla <https://github.com/mear
 
 ## Significancia
 
-Este proyecto representa una solución modernar, permitiendo al difusion de los productos/servicios del poryecto LOGIKIA, combinando las capacidades de Astro para rendimiento con la experiencia de usuario de Starlight. La implementación de la Memory Bank proporciona una base sólida para la continuidad del conocimiento y la toma de decisiones informadas en proyectos futuros.
+Este proyecto representa una solución modernar, permitiendo al difusion de los productos/servicios del proyecto LOGIKIA, combinando las capacidades de Astro para rendimiento con la experiencia de usuario de Starlight. La implementación de la Memory Bank proporciona una base sólida para la continuidad del conocimiento y la toma de decisiones informadas en proyectos futuros.
