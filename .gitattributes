@@ -1,0 +1,10 @@
+# Archivos de marca LOGIKIA - siempre preferir nuestra versión
+data_files/constants.ts merge=ours
+src/utils/navigation.ts merge=ours
+src/components/BrandLogo.astro merge=ours
+tailwind.config.mjs merge=ours
+public/favicon.ico merge=ours
+
+# Archivos que requieren revisión manual
+astro.config.mjs merge=union
+src/layouts/MainLayout.astro merge=union

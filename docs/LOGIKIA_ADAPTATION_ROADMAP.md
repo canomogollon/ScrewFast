@@ -14,6 +14,7 @@ Este documento es la guía maestra para la adaptación de la plantilla AstroJS "
 | :--- | :--- | :--- | :--- | :--- |
 | **0. Configuración Inicial** | 0.1. Configuración de Tailwind CSS | Crear el archivo `tailwind.config.mjs` en la raíz del proyecto y poblarlo con la configuración de la paleta de colores y tipografía de LOGIKIA. | Archivo `tailwind.config.mjs` creado. | Crítica |
 | | 0.2. Configuración de Internacionalización (i18n) | Modificar `astro.config.mjs` para ajustar las configuraciones de i18n dentro de las integraciones `sitemap` y `starlight`, limitando los idiomas a `es` (defecto) y `en`. | `astro.config.mjs` actualizado con i18n. | Crítica |
+| | **0.3. Configuración de Git y Estrategia de Fork** | **Configurar `upstream`, crear `.gitattributes` para merge strategy, y establecer carpeta `.upstream-backups/` para respaldos.** | **Repositorio configurado para mantenimiento del fork.** | **Crítica** |
 | **1. Análisis y Preparación** | 1.1. Auditoría de Componentes | Revisar `src/components/` para identificar componentes reutilizables, a modificar o a eliminar. | Documento de mapeo de componentes. | Alta |
 | | 1.2. Análisis de Configuración de Plantilla | Revisar `README.md` y archivos de configuración como `src/utils/navigation.ts` y `src/data_files/constants.ts` para entender los puntos clave de personalización. | Resumen de puntos de configuración. | Alta |
 | | 1.3. Mapeo de Contenido y Marca | Conectar el contenido de `brand-identity.md` con la nueva estructura de páginas (Inicio, Servicios, Productos, etc.). | Borrador de la arquitectura de contenido del sitio. | Alta |
@@ -35,3 +36,73 @@ Este documento es la guía maestra para la adaptación de la plantilla AstroJS "
 | **5. Entrega y Documentación** | 5.1. Optimización y Build Final | Ejecutar `npm run build` y verificar la correcta generación de los archivos en `dist/`. | Build de producción exitoso. | Alta |
 | | 5.2. Actualizar README.md | Reemplazar el contenido del `README.md` principal con la descripción del proyecto LOGIKIA, en lugar de la información genérica de la plantilla. | `README.md` actualizado. | Media |
 | | 5.3. Creación de Guía de Mantenimiento | Crear un archivo simple `MANUAL_USO.md` en `/docs` explicando cómo actualizar contenido básico. | `MANUAL_USO.md` creado. | Media |
+
+---
+
+## Anexo: Estrategia de Mantenimiento del Fork
+
+### Configuración Inicial (Una sola vez)
+
+```bash
+# 1. Agregar upstream
+git remote add upstream https://github.com/mearashadowfax/ScrewFast.git
+git fetch upstream
+
+# 2. Crear archivo .gitattributes
+cat > .gitattributes << 'EOF'
+# LOGIKIA - Archivos de marca que siempre mantienen nuestra versión
+data_files/constants.ts merge=ours
+src/utils/navigation.ts merge=ours
+src/components/BrandLogo.astro merge=ours
+tailwind.config.mjs merge=ours
+public/favicon.ico merge=ours
+public/social.webp merge=ours
+
+# Archivos que requieren revisión manual en cada update
+astro.config.mjs merge=union
+src/layouts/MainLayout.astro merge=union
+EOF
+
+# 3. Crear carpeta para respaldos
+mkdir -p src/components/.upstream-backups
+echo "*.original.astro" >> .gitignore
+```
+
+### Flujo de Actualización desde Upstream
+
+```bash
+# PASO 1: Actualizar rama main con cambios de upstream
+git checkout main
+git fetch upstream
+git merge upstream/main --no-ff -m "chore: sync with ScrewFast upstream $(date +%Y-%m-%d)"
+git push origin main
+
+# PASO 2: Revisar cambios antes de merge a logikia-dev
+git log main..logikia-dev --oneline  # Ver qué cambios propios tienes
+git diff main logikia-dev -- data_files/constants.ts  # Verificar archivos críticos
+
+# PASO 3: Merge a logikia-dev con estrategia de respaldo
+git checkout logikia-dev
+git merge main --no-ff -m "chore: integrate upstream updates to dev"
+
+# Si hay conflictos en componentes personalizados:
+git checkout --ours src/components/sections/landing/HeroSection.astro
+git add src/components/sections/landing/HeroSection.astro
+
+# PASO 4: Probar build después del merge
+npm run build
+
+# PASO 5: Si todo funciona, llevar a producción
+git checkout logikia-prod
+git merge logikia-dev --no-ff -m "chore: promote tested upstream updates to prod"
+```
+
+### Checklist de Verificación Post-Update
+
+- [ ] Build exitoso (`npm run build`)
+- [ ] Colores de marca correctos (revisar [`tailwind.config.mjs`](tailwind.config.mjs))
+- [ ] Logo LOGIKIA visible (revisar [`src/components/BrandLogo.astro`](src/components/BrandLogo.astro))
+- [ ] Navegación correcta (revisar [`src/utils/navigation.ts`](src/utils/navigation.ts))
+- [ ] SEO metadata correcta (revisar [`data_files/constants.ts`](data_files/constants.ts))
+- [ ] i18n funcional (es/en) (revisar [`astro.config.mjs`](astro.config.mjs))
+- [ ] Pruebas visuales en dev: `npm run dev`
