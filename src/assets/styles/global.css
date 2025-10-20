@@ -1,5 +1,5 @@
-@import 'tailwindcss';
-@import 'preline/variants.css';
+@import "tailwindcss";
+@import "preline/variants.css";
 @plugin '@tailwindcss/forms';
 
 @custom-variant dark (&:is(.dark *));
@@ -11,6 +11,35 @@
   --color-current: currentColor;
   --color-black: #000;
   --color-white: #fff;
+
+  /* LOGIKIA Brand Colors - Actualizados */
+  --color-primary: #0a2342;
+  --color-primary-hover: #1a365d;
+  --color-primary-text: #38bdf8;
+
+  /* Accent Colors */
+  --color-accent-green: #2ecc71;
+  --color-accent-green-dark: #4ade80;
+  --color-accent-orange: #e67e22;
+  --color-accent-orange-dark: #f97316;
+
+  /* Background Colors */
+  --color-background-light: #ffffff;
+  --color-background-dark: #111827;
+  --color-surface-light: #f8f9fa;
+  --color-surface-dark: #1f2937;
+
+  /* Text Colors */
+  --color-text-main-light: #1e293b;
+  --color-text-main-dark: #f1f5f9;
+  --color-text-subtle-light: #64748b;
+  --color-text-subtle-dark: #94a3b8;
+
+  /* Border Colors */
+  --color-border-light: #e2e8f0;
+  --color-border-dark: #334155;
+
+  /* Mantén los colores existentes del template... */
 
   --color-gray-50: oklch(0.985 0.002 247.839);
   --color-gray-100: oklch(0.967 0.003 264.542);

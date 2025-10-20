@@ -9,7 +9,7 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
-  site: "https://screwfast.uk",
+  site: "https://logikia.com",
   image: {
     domains: ["images.unsplash.com"],
   },
@@ -31,11 +31,17 @@ export default defineConfig({
         locales: {
           es: "es",
           en: "en",
+        defaultLocale: "es", // All urls that don't contain language prefix will be treated as default locale
+        locales: {
+          en: "es", // The `defaultLocale` value must present in `locales` keys
+          es: "en",
+          fr: "fr",
         },
       },
     }),
     starlight({
       title: "LOGIKIA DOCS",
+      title: "LogikIA Docs",
       // https://github.com/withastro/starlight/blob/main/packages/starlight/CHANGELOG.md
       // If no Astro and Starlight i18n configurations are provided, the built-in default locale is used in Starlight and a matching Astro i18n configuration is generated/used.
       // If only a Starlight i18n configuration is provided, an equivalent Astro i18n configuration is generated/used.
@@ -47,6 +53,12 @@ export default defineConfig({
           lang: "es",
         },
         en: { label: "English", lang: "en" },
+        de: { label: "Deutsch", lang: "de" },
+        es: { label: "English", lang: "en" },
+        fa: { label: "Persian", lang: "fa", dir: "rtl" },
+        fr: { label: "Français", lang: "fr" },
+        ja: { label: "日本語", lang: "ja" },
+        "zh-cn": { label: "简体中文", lang: "zh-CN" },
       },
       // https://starlight.astro.build/guides/sidebar/
       sidebar: [
@@ -104,14 +116,14 @@ export default defineConfig({
           tag: "meta",
           attrs: {
             property: "og:image",
-            content: "https://screwfast.uk" + "/social.webp",
+            content: "https://logikia.com" + "/social.webp",
           },
         },
         {
           tag: "meta",
           attrs: {
             property: "twitter:image",
-            content: "https://screwfast.uk" + "/social.webp",
+            content: "https://logikia.com" + "/social.webp",
           },
         },
       ],

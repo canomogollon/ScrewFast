@@ -1,29 +1,33 @@
 {
-  "subTitle": "Ask us anything about our brand and products, and get factual responses.",
+  "subTitle": "Consultanos sobre nuestros servicios y  productos, y obtén respuestas precisas.",
   "faqs": [
     {
-      "question": "What types of tools are included in the Starter Kit?",
-      "answer": "The Starter Kit features essential hand and power tools for diverse DIY projects, including hammers, drills, screwdrivers, and a variety of fasteners. It's a curated selection to help beginners and experienced DIYers alike tackle most home improvement tasks."
+      "question": "¿Qué es LOGIKIA?",
+      "answer": "LOGIKIA es una empresa colombiana que desarrolla Agentes de Inteligencia Artificial confiables, especializados en eliminar el riesgo de \"alucinaciones\" o información falsa."
     },
     {
-      "question": "Can I upgrade from the Starter Kit to the Professional Toolbox?",
-      "answer": "Absolutely! You can upgrade to the Professional Toolbox at any time to access a wider range of high-quality tools, enjoy priority customer support, and receive exclusive content. Contact our support team for a seamless transition."
+      "question": "¿Qué diferencia a LOGIKIA de otras IA como ChatGPT?",
+      "answer": "Nuestro enfoque es la precisión sobre la creatividad. Mientras otras IA pueden inventar respuestas, nuestros agentes están diseñados para dar información basada en hechos y fuentes verificables, garantizando datos 100% auditables."
     },
     {
-      "question": "What discounts are available for bulk orders through the Professional Toolbox plan?",
-      "answer": "Professional Toolbox members are entitled to exclusive discounts on bulk orders, the percentage of which may vary depending on the order volume. Get in touch with us to discuss your needs, and we'll provide a tailored discount structure."
+      "question": "¿Cómo funciona el agente LawMind?",
+      "answer": "Es un asistente jurídico entrenado con el corpus legal colombiano. Permite a los abogados hacer consultas y recibir respuestas rápidas citando siempre la fuente legal exacta, garantizando total trazabilidad."
     },
     {
-      "question": "What kind of customer support can I expect?",
-      "answer": "All our customers receive dedicated email support. With the Starter Kit, you'll receive our standard support, while the Professional Toolbox plan upgrades you to priority support, meaning faster response times and specialized assistance."
+      "question": "¿LawMind entrega fuentes legales verificadas?",
+      "answer": "Cada respuesta incluye la norma colombiana consultada y su referencia exacta para trazabilidad y uso profesional."
     },
     {
-      "question": "How current are the online resources and tutorials?",
-      "answer": "We regularly update our online resources and tutorials to reflect the latest trends in DIY and construction, as well as introductions to new tools and techniques. Our material aims to be comprehensive and user-friendly for all skill levels."
+      "question": "¿Qué hace el agente SalesMind?",
+      "answer": "Es un asesor virtual de ventas 24/7 que se integra con WhatsApp, Telegram o su web. Se entrena con su portafolio para atender clientes, generar cotizaciones automáticas y filtrar prospectos."
     },
     {
-      "question": "Does ScrewFast offer services for large-scale construction projects?",
-      "answer": "Yes, our Enterprise Solutions are designed for larger companies requiring comprehensive services. We provide consultation, planning, and supply of high-grade tools and materials, as well as staffing solutions for substantial construction needs. Contact us for a customized quote."
+      "question": "¿SalesMind puede atender por WhatsApp o web?",
+      "answer": "Sí, SalesMind responde en tiempo real en canales digitales como WhatsApp, Telegram, correo y la web corporativa."
+    },
+    {
+      "question": "¿Necesito instalar algún software?",
+      "answer": "No. LOGIKIA funciona con un acceso web seguro. No se requiere ninguna instalación de software en sus equipos."
     }
   ]
 }

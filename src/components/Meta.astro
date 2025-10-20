@@ -1,8 +1,11 @@
 ---
-import { getImage } from "astro:assets";
-import { OG, SEO, SITE } from "@data/constants";
-import faviconSvgSrc from "@images/icon.svg";
-import faviconSrc from "@images/icon.png";
+import { getImage } from 'astro:assets';
+import { OG, SEO, SITE } from '@data/constants';
+import faviconSvgSrc from '@images/logikia/favicon.svg';
+//import faviconSrc from '@images/logikia/favicon.png';
+import favicon96Src from '@images/logikia/favicon-96x96.png';
+import faviconico from '@images/logikia/favicon.ico';
+import faviconappleTouchIcon from '@images/logikia/apple-touch-icon.png';
 
 // Default properties for the Meta component. These values are used if props are not provided.
 // 'meta' sets a default description meta tag to describe the page content.
@@ -43,17 +46,18 @@ const socialImageRes = await getImage({
 const socialImage = Astro.url.origin + socialImageRes.src; // Get the full URL of the image (https://stackoverflow.com/a/9858694)
 
 const languages: { [key: string]: string } = {
-  en: "",
-  fr: "fr",
+  en: '',
+  es: 'es',
+  fr: 'fr',
 };
 
 function createHref(lang: string, prefix: string, path: string): string {
   // Remove any existing language prefix
-  const cleanPath = path.replace(/^\/(fr|en)\//, "/");
+  const cleanPath = path.replace(/^\/(fr|en)\//, '/');
 
   // Add the correct language prefix if needed
   const basePath = prefix ? `/${prefix}${cleanPath}` : cleanPath;
-  const normalizedBasePath = basePath.replace(/\/\/+/g, "/");
+  const normalizedBasePath = basePath.replace(/\/\/+/g, '/');
 
   return `${URL.slice(0, -1)}${normalizedBasePath}`;
 }
@@ -62,36 +66,34 @@ const fullPath: string = Astro.url.pathname;
 
 const alternateLanguageLinks: string = Object.entries(languages)
   .map(([lang, prefix]: [string, string]) => {
-    const cleanPath = fullPath.replace(/^\/(fr|en)\//, "/");
+    const cleanPath = fullPath.replace(/^\/(fr|en)\//, '/');
     const href: string = createHref(lang, prefix, cleanPath);
 
     return `<link rel="alternate" hreflang="${lang}" href="${href}" />`;
   })
-  .join("\n");
+  .join('\n');
 
 // Generate and optimize the favicon images
 const faviconSvg = await getImage({
   src: faviconSvgSrc,
-  format: "svg",
+  format: 'svg',
+});
+
+const icon96Src = await getImage({
+  src: favicon96Src,
+  format: 'png',
 });
 
 const appleTouchIcon = await getImage({
-  src: faviconSrc,
-  width: 180,
-  height: 180,
-  format: "png",
+  src: faviconappleTouchIcon,
+  format: 'png',
 });
 ---
 
-{/*  Inject structured data into the page if provided. This data is formatted as JSON-LD, a method recommended by Google for structured data pass:
-     https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data */}{
-  structuredData && (
-    <script
-      type="application/ld+json"
-      set:html={JSON.stringify(structuredData)}
-    />
-  )
-}
+{
+  /*  Inject structured data into the page if provided. This data is formatted as JSON-LD, a method recommended by Google for structured data pass:
+     https://developers.google.com/search/docs/advanced/structured-data/intro-structured-data */
+}{structuredData && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
 {/* Define the character set, description, author, and viewport settings */}
 <meta charset="utf-8" />
 <meta content={description} name="description" />
@@ -130,10 +132,13 @@ const appleTouchIcon = await getImage({
 <link rel="sitemap" href="/sitemap-index.xml" />
 
 {/* Links for favicons */}
-<link href="/favicon.ico" rel="icon" sizes="any" type="image/x-icon" />
+<link rel="icon" type="image/png" href={icon96Src.src} sizes="96x96" />
+<link href={faviconico} rel="icon" sizes="any" type="image/x-icon" />
 <link href={faviconSvg.src} rel="icon" type="image/svg+xml" sizes="any" />
 <meta name="mobile-web-app-capable" content="yes" />
-<link href={appleTouchIcon.src} rel="apple-touch-icon" />
+<link href={appleTouchIcon.src} sizes="180x180" rel="apple-touch-icon" />
+<meta name="apple-mobile-web-app-title" content="LogikIA" />
 <link href={appleTouchIcon.src} rel="shortcut icon" />
+<link rel="manifest" href={'images/logikia/site.webmanifest'} />
 {/* Set theme color */}
 <meta name="theme-color" content="#facc15" />

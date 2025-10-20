@@ -1,38 +1,41 @@
 {
-  "title": "Simple, Transparent Pricing",
-  "subTitle": "Boost efficiency with ScrewFast's clear, value-driven plans.",
-  "badge": "Best value",
-  "thirdOption": "Enterprise Solutions?",
-  "btnText": "Get a Custom Quote",
+  "title": "Acceso a soluciones de IA asequibles y escalables",
+  "subTitle": "Un precio lógico para una inteligencia superior a tu servicio",
+  "badge": "Obten tu agente",
+  "thirdOption": "¿Agente personalizado?",
+  "thirdOptionLink": "/contact",
+  "btnText": "Obtener una cotización",
 
   "starterKit": {
-    "name": "Starter Kit",
-    "description": "Best option for DIY projects",
-    "price": "49",
+    "name": "Soporte y Operación Mensual",
+    "description": "Sostenimiento Mensual I.A",
+    "price": "900.000",
     "cents": ".00",
-    "billingFrequency": "USD / monthly",
+    "billingFrequency": "COP / Mensualidad",
     "features": [
-      "Key hardware tools",
-      "Access to guides & tutorials",
-      "Standard support"
+      "Actualizaciones de la base de conocimiento",
+      "Acceso a nuevas funcionalidades de la plataforma LOGIKIA",
+      "Soporte técnico"
     ],
-    "purchaseBtnTitle": "Get the Starter Kit",
-    "purchaseLink": "#"
+    "purchaseBtnTitle": "Saber más",
+    "purchaseLink": "/contact"
   },
 
   "professionalToolbox": {
-    "name": "Professional Toolbox",
-    "description": "Best for large scale uses",
-    "price": "89",
+    "name": "Instalación y Entrenamiento Inicial",
+    "description": "Inicialización del Agente I.A personalizado para su organización",
+    "price": "3'000.000",
     "cents": ".00",
-    "billingFrequency": "USD / monthly",
+    "billingFrequency": "COP / Unico pago",
     "features": [
-      "Premium tool selection",
-      "Priority support",
-      "Exclusive content & deals",
-      "Bulk order discounts"
+      "Análisis de sus fuentes de datos.",
+      "Personalización del agente (LawMind o SalesMind)",
+      "Instalacion y configuracion tecnica del agente.",
+      "Entrenamiento del modelo para alinearlo con sus objetivos de negocio.",
+      "Integracion con sus canales de comunicación (Web, WhatsApp, Telegram, etc).",
+      "Capacitacion para su equipo en el uso y mantenimiento del agente."
     ],
-    "purchaseBtnTitle": "Get the Professional Toolbox",
-    "purchaseLink": "#"
+    "purchaseBtnTitle": "Saber más",
+    "purchaseLink": "/contact"
   }
 }
