@@ -1,21 +1,14 @@
 ---
-// Import necessary components
-import MainLayout from "@/layouts/MainLayout.astro";
-import MainSection from "@components/ui/blocks/MainSection.astro";
-import LeftSection from "@components/ui/blocks/LeftSection.astro";
-import RightSection from "@components/ui/blocks/RightSection.astro";
-import FeaturesStats from "@components/sections/features/FeaturesStats.astro";
+import MainLayout from '@/layouts/MainLayout.astro';
+import MainSection from '@components/ui/blocks/MainSection.astro';
+import LeftSection from '@components/ui/blocks/LeftSection.astro';
+import RightSection from '@components/ui/blocks/RightSection.astro';
+import FeaturesStats from '@components/sections/features/FeaturesStats.astro';
 
-// Import necessary images
-import blueprints from "@images/blueprints-image.avif";
-import personWorking from "@images/person-working.avif";
-import beforeAfter from "@images/before-after.avif";
-import constructionWorkers from "@images/construction-workers.avif";
-import aerialView from "@images/aerial-view.avif";
-import usingTools from "@images/using-tools.avif";
-import progressBuilding from "@images/progress-building.avif";
-import underConstruction from "@images/under-construction.avif";
-import { SITE } from "@data/constants";
+import progressBuilding from '@images/progress-building.avif';
+import personWorking from '@images/person-working.avif';
+import underConstruction from '@images/under-construction.avif';
+import constructionWorkers from '@images/construction-workers.avif';
 
 interface Article {
   isRightSection: boolean;
@@ -36,66 +29,65 @@ interface Article {
 const articles: Article[] = [
   {
     isRightSection: true,
-    title: "Delivering Expert Guidance",
+    title: 'Consultoría Estratégica en IA Aplicada',
     subTitle:
-      "Embarking on a construction project can be overwhelming. With our professional consultation services, we guide you through every stage, ensuring you make informed decisions. Whether you are a DIY enthusiast or a skilled contractor, our experts are on hand to offer tailored advice on product selection, project scope, and compliance with local regulations.",
+      'Acompañamos a tu organización en la integración de agentes inteligentes como SalesMind y LawMind, definiendo estrategias personalizadas, asegurando cumplimiento normativo y optimizando procesos comerciales y legales.',
     single: false,
-    imgOne: blueprints,
-    imgOneAlt: "Blueprints and digital tablet with construction plans.",
-    imgTwo: personWorking,
-    imgTwoAlt: "Person working in the office",
+    imgOne: personWorking,
+    imgOneAlt: 'Reunión profesional de consultoría en IA',
+    imgTwo: progressBuilding,
+    imgTwoAlt: 'Planificación estratégica empresarial',
   },
   {
     isRightSection: false,
-    title: "Transforming Designs into Reality",
+    title: 'Desarrollo e Integración Tecnológica',
     subTitle:
-      "Our skilled craftsmen bring precision and excellence to every construction project. From minor installations to substantial structural work, ScrewFast offers reliable construction services to turn your plans into tangible outcomes. We ensure the highest standards of safety and workmanship, utilizing top-quality tools and materials from our extensive inventory.",
-    img: beforeAfter,
-    imgAlt: "Construction site before and after",
+      'Implementamos soluciones de inteligencia artificial escalables, integradas en canales y plataformas digitales de tu empresa para maximizar captación, atención y conversión, y asegurar una experiencia única para tus clientes.',
+    img: progressBuilding,
+    imgAlt: 'Equipo de desarrollo trabajando en código',
     btnExists: true,
-    btnTitle: "Learn More",
-    btnURL: "#",
+    btnTitle: 'Solicitar más información',
+    btnURL: '/contact',
   },
   {
     isRightSection: true,
-    title: "Navigating Projects with Professional Oversight",
+    title: 'Formación y Soporte Continuo',
     subTitle:
-      "Effective project management is at the heart of any successful build. ScrewFast provides thorough planning and robust management services that keep your project on time and within budget. Let us handle the complexities of workflow coordination, resource allocation, and stakeholder communication while you focus on your vision.",
+      'Capacitamos a tus equipos en el uso de agentes IA para procesos comerciales y legales, además de brindar soporte técnico permanente y actualizaciones que garantizan la efectividad y seguridad de la solución.',
     single: false,
-    imgOne: constructionWorkers,
-    imgOneAlt: "Construction workers orchestrating a project",
-    imgTwo: aerialView,
-    imgTwoAlt: "Aerial view of managed construction",
+    imgOne: underConstruction,
+    imgOneAlt: 'Sesión de formación de personal',
+    imgTwo: personWorking,
+    imgTwoAlt: 'Soporte técnico en acción',
   },
   {
     isRightSection: false,
-    title: "Ensuring Long-lasting Performance",
+    title: 'Análisis y Optimización de Resultados',
     subTitle:
-      "Our commitment to your project doesn't end at completion. ScrewFast offers ongoing maintenance and support services to ensure your construction's longevity and performance. From regular check-ups to emergency assistance, our responsive team is there to provide seamless support.",
-    img: usingTools,
-    imgAlt:
-      "Man in orange and black vest wearing white helmet holding yellow and black power tool",
+      'Medimos el impacto de los agentes inteligentes en tus operaciones, generando reportes detallados y recomendaciones para mejorar continuamente la eficacia y retorno de inversión (ROI).',
+    img: personWorking,
+    imgAlt: 'Gráficos representando análisis de datos',
   },
   {
     isRightSection: true,
-    title: "Crafting Bespoke Strategies for Unique Challenges",
+    title: 'Diseño de Estrategias Personalizadas para Sectores Específicos',
     subTitle:
-      "For our larger enterprise clients, ScrewFast offers custom solutions designed to meet specific industry challenges. By understanding your unique needs, we engineer tailored strategies aimed at optimizing your operations, enhancing efficiency, and driving your business forward.",
+      'Para sectores inmobiliario, legal y otros ámbitos profesionales, diseñamos soluciones a medida que responden a los retos y regulaciones locales, garantizando máxima relevancia y cumplimiento.',
     single: false,
     imgOne: progressBuilding,
-    imgOneAlt: "In progress building structure",
-    imgTwo: underConstruction,
-    imgTwoAlt: "Brown and gray building under construction",
+    imgOneAlt: 'Diseño de soluciones a medida',
+    imgTwo: progressBuilding,
+    imgTwoAlt: 'Cumplimiento regulatorio local en Colombia',
     btnExists: true,
-    btnTitle: "Read more",
-    btnURL: "#",
+    btnTitle: 'Descubre más',
+    btnURL: '/products',
   },
 ];
 
-const pageTitle: string = `Services | ${SITE.title}`;
+const pageTitle = `Servicios | LOGIKIA IA Confiable`;
 const metaDescription =
-  "Uniting expertise with your vision, ScrewFast provides exceptional service and comprehensive solutions in the hardware and construction industry, from consultation to project completion.";
-const ogTitle = "Expert Consultation Services | ScrewFast";
+  'LOGIKIA ofrece consultoría, desarrollo, formación y soporte en agentes inteligentes para sectores comerciales y legales en Colombia.';
+const ogTitle = 'Servicios especializados en inteligencia artificial | LOGIKIA';
 ---
 
 <MainLayout
@@ -103,39 +95,31 @@ const ogTitle = "Expert Consultation Services | ScrewFast";
   customDescription={metaDescription}
   customOgTitle={ogTitle}
   structuredData={{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://screwfast.uk/services",
-    url: "https://screwfast.uk/services",
-    name: "Expert Consultation Services | ScrewFast",
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': 'https://logikia.co/servicios',
+    url: 'https://logikia.co/servicios',
+    name: 'Servicios especializados en inteligencia artificial | LOGIKIA',
     description:
-      "Uniting expertise with your vision, ScrewFast provides exceptional service and comprehensive solutions in the hardware and construction industry, from consultation to project completion.",
+      'Consultoría, desarrollo e integración de agentes IA confiables para mejorar tus procesos comerciales y legales en Colombia.',
     isPartOf: {
-      "@type": "WebSite",
-      url: "https://screwfast.uk",
-      name: "ScrewFast",
+      '@type': 'WebSite',
+      url: 'https://logikia.co',
+      name: 'LOGIKIA',
       description:
-        "ScrewFast offers top-tier hardware tools and expert construction services to meet all your project needs.",
+        'LOGIKIA ofrece soluciones inteligentes personalizadas para el mercado colombiano.',
     },
-    inLanguage: "en-US",
+    inLanguage: 'es-CO',
   }}
 >
-  {/* MainSection is the introductory section of the page, it also contains a CTA button */}
   <MainSection
-    title="Uniting Expertise with Your Vision"
-    subTitle="At ScrewFast, we take pride in providing comprehensive solutions and exceptional service in the hardware and construction industry. Our experienced team is dedicated to supporting your project from inception to completion with a range of specialized services."
+    title="Unimos experiencia y tecnología para potenciar tu negocio"
+    subTitle="En LOGIKIA brindamos consultoría, desarrollo, implementación y soporte continuo en inteligencia artificial para sectores comerciales y legales, con un enfoque ético y orientado a resultados."
     btnExists={true}
-    btnTitle="Schedule a Consultation"
-    btnURL="#"
+    btnTitle="Agenda tu consulta"
+    btnURL="/contact"
   />
-  {/* RightSection and LeftSection contain details about various services along with pertinent imagery.
-  They alternate for variety in design.
-  The 'btnExists' property is used to toggle the display of a button in these sections.
-  When btnExists={true}, a button is displayed.
-  This can be used to link to more detailed information or related resources.
-  RightSection can also conditionally render one or two images based on the 'single' property.
-  If 'single' is true, it displays one image, otherwise it displays two.
-  */}
+
   {
     articles.map((article) => {
       return article.isRightSection ? (
@@ -164,24 +148,24 @@ const ogTitle = "Expert Consultation Services | ScrewFast";
       );
     })
   }
-  {/* FeaturesStats section showcases essential stats valuable to users */}
+
   <FeaturesStats
-    title="By the Numbers"
-    subTitle="Our commitment to quality and reliability is evident in every project we undertake. At ScrewFast, we are dedicated to delivering industry-leading services that ensure your construction projects are built to last."
-    mainStatTitle="96%"
-    mainStatSubTitle="of our clients rate their experience with ScrewFast as exceptional"
+    title="Datos que respaldan nuestra excelencia"
+    subTitle="El compromiso de LOGIKIA con la calidad y la innovación se refleja en cada proyecto y solución que entregamos."
+    mainStatTitle="98%"
+    mainStatSubTitle="de satisfacción de nuestros clientes"
     stats={[
       {
-        stat: "99.8%",
-        description: "project completion rate",
+        stat: '150+',
+        description: 'soluciones IA implementadas',
       },
       {
-        stat: "5,000+",
-        description: "successful installations",
+        stat: '30K+',
+        description: 'consultas automáticas atendidas mensualmente',
       },
       {
-        stat: "85%",
-        description: "client growth year-over-year",
+        stat: '90%',
+        description: 'reducción en tiempos de respuesta',
       },
     ]}
   />
