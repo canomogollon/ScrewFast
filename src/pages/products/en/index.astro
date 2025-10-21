@@ -1,7 +1,7 @@
 ---
 // Importing necessary components
 import MainLayout from '@/layouts/MainLayout.astro';
-//import PrimaryCTA from '@components/ui/buttons/PrimaryCTA.astro';
+import PrimaryCTA from '@components/ui/buttons/PrimaryCTA.astro';
 import CardSmall from '@components/ui/cards/CardSmall.astro';
 import CardWide from '@components/ui/cards/CardWide.astro';
 import FeaturesStatsAlt from '@components/sections/features/FeaturesStatsAlt.astro';
@@ -15,7 +15,7 @@ import { SITE } from '@data/constants';
 // Fetching all the product related content and sorting it by main.id
 const product: CollectionEntry<'products'>[] = (
   await getCollection('products', ({ id }) => {
-    return id.startsWith('es/');
+    return id.startsWith('en/');
   })
 ).sort(
   (a: CollectionEntry<'products'>, b: CollectionEntry<'products'>) =>
@@ -28,7 +28,6 @@ const subTitle: string =
   'Explora los agentes inteligentes de LOGIKIA: soluciones IA diseñadas para aumentar la eficiencia, reducir errores y mejorar la toma de decisiones en los sectores comercial y jurídico de Colombia.';
 
 // Testimonial data that will be rendered in the component
-/*
 const testimonials = [
   // First testimonial data
   {
@@ -60,7 +59,7 @@ const testimonials = [
       'https://images.unsplash.com/photo-1474176857210-7287d38d27c6?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D8&auto=format&fit=facearea&facepad=2&w=320&h=320&q=80',
     avatarAlt: 'Image Description',
   },
-];*/
+];
 
 const pageTitle: string = `Productos | ${SITE.title}`;
 const metaDescription =

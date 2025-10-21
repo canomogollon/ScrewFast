@@ -57,6 +57,31 @@ const productsCollection = defineCollection({
       first: image().optional(),
       second: image().optional(),
     }),
+    useCases: z.object({
+      title: z.string(),
+      subTitle: z.string().optional(),
+      items: z.array(z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        icon: z.string().optional(),
+      })).optional(),
+    }).optional(),
+    pricing: z.object({
+      title: z.string(),
+      subTitle: z.string().optional(),
+      plans: z.array(z.object({
+        name: z.string(),
+        price: z.string(),
+        period: z.string(),
+        description: z.string(),
+        features: z.array(z.string()),
+        cta: z.object({
+          text: z.string(),
+          url: z.string(),
+        }),
+        popular: z.boolean().optional().default(false),
+      })),
+    }).optional(),
   }),
 });
 
