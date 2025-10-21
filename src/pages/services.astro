@@ -3,8 +3,10 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import MainSection from '@components/ui/blocks/MainSection.astro';
 import LeftSection from '@components/ui/blocks/LeftSection.astro';
 import RightSection from '@components/ui/blocks/RightSection.astro';
-import FeaturesStats from '@components/sections/features/FeaturesStats.astro';
+// (OPCIONAL) Importa un componente de Preline si lo tienes, o usa el HTML de abajo
+// import IconBlocks from '@components/sections/IconBlocks.astro';
 
+// Imágenes importadas
 import progressBuilding from '@images/progress-building.avif';
 import personWorking from '@images/person-working.avif';
 import underConstruction from '@images/under-construction.avif';
@@ -26,12 +28,15 @@ interface Article {
   imgTwoAlt?: string;
 }
 
+// ======================================================
+// ARTÍCULOS: Contenido optimizado y más directo
+// ======================================================
 const articles: Article[] = [
   {
     isRightSection: true,
-    title: 'Consultoría Estratégica en IA Aplicada',
+    title: 'Consultoría Estratégica en IA',
     subTitle:
-      'Acompañamos a tu organización en la integración de agentes inteligentes como SalesMind y LawMind, definiendo estrategias personalizadas, asegurando cumplimiento normativo y optimizando procesos comerciales y legales.',
+      'Acompañamos a tu organización en la integración de agentes inteligentes como SalesMind y LawMind, definiendo estrategias personalizadas, asegurando cumplimiento normativo y optimizando tus procesos.',
     single: false,
     imgOne: personWorking,
     imgOneAlt: 'Reunión profesional de consultoría en IA',
@@ -40,54 +45,57 @@ const articles: Article[] = [
   },
   {
     isRightSection: false,
-    title: 'Desarrollo e Integración Tecnológica',
+    title: 'Desarrollo e Integración (Web/WhatsApp)',
     subTitle:
-      'Implementamos soluciones de inteligencia artificial escalables, integradas en canales y plataformas digitales de tu empresa para maximizar captación, atención y conversión, y asegurar una experiencia única para tus clientes.',
-    img: progressBuilding,
-    imgAlt: 'Equipo de desarrollo trabajando en código',
+      'Construimos e integramos los agentes IA en tus canales existentes (web, WhatsApp, Telegram). Creamos soluciones escalables que maximizan la captación y conversión de clientes.',
+    img: constructionWorkers, // Imagen actualizada
+    imgAlt: 'Equipo de desarrollo integrando APIs',
     btnExists: true,
     btnTitle: 'Solicitar más información',
-    btnURL: '/contact',
+    btnURL: '/contacto',
   },
   {
     isRightSection: true,
-    title: 'Formación y Soporte Continuo',
+    title: 'Formación Ética y Soporte Continuo',
     subTitle:
-      'Capacitamos a tus equipos en el uso de agentes IA para procesos comerciales y legales, además de brindar soporte técnico permanente y actualizaciones que garantizan la efectividad y seguridad de la solución.',
+      'Capacitamos a tus equipos en el uso ético y efectivo de los agentes. Brindamos soporte técnico permanente y actualizaciones de la base de conocimiento para garantizar la precisión.',
     single: false,
-    imgOne: underConstruction,
+    imgOne: underConstruction, // Imagen actualizada
     imgOneAlt: 'Sesión de formación de personal',
     imgTwo: personWorking,
     imgTwoAlt: 'Soporte técnico en acción',
   },
   {
     isRightSection: false,
-    title: 'Análisis y Optimización de Resultados',
+    title: 'Análisis de Métricas y Optimización ROI',
     subTitle:
-      'Medimos el impacto de los agentes inteligentes en tus operaciones, generando reportes detallados y recomendaciones para mejorar continuamente la eficacia y retorno de inversión (ROI).',
-    img: personWorking,
-    imgAlt: 'Gráficos representando análisis de datos',
+      'Medimos el impacto real de la IA en tu operación. Generamos reportes de rendimiento, conversión y ROI, con recomendaciones para la optimización continua.',
+    img: progressBuilding, // Reutilizada para gráficas/reportes
+    imgAlt: 'Gráficos representando análisis de datos y ROI',
   },
   {
     isRightSection: true,
-    title: 'Diseño de Estrategias Personalizadas para Sectores Específicos',
+    title: 'Soluciones Verticales (Legal e Inmobiliario)',
     subTitle:
-      'Para sectores inmobiliario, legal y otros ámbitos profesionales, diseñamos soluciones a medida que responden a los retos y regulaciones locales, garantizando máxima relevancia y cumplimiento.',
+      'Diseñamos soluciones IA a medida para los retos únicos del sector inmobiliario y legal en Colombia, garantizando máxima relevancia, precisión y cumplimiento regulatorio.',
     single: false,
-    imgOne: progressBuilding,
-    imgOneAlt: 'Diseño de soluciones a medida',
-    imgTwo: progressBuilding,
-    imgTwoAlt: 'Cumplimiento regulatorio local en Colombia',
+    imgOne: personWorking,
+    imgOneAlt: 'Abogado usando LawMind',
+    imgTwo: underConstruction,
+    imgTwoAlt: 'Agente inmobiliario usando SalesMind',
     btnExists: true,
-    btnTitle: 'Descubre más',
+    btnTitle: 'Descubre los Productos',
     btnURL: '/products',
   },
 ];
 
-const pageTitle = `Servicios | LOGIKIA IA Confiable`;
+// ======================================================
+// METADATOS: Optimizados para SEO/AEO
+// ======================================================
+const pageTitle = `Servicios de IA en Colombia | LOGIKIA IA Confiable`;
 const metaDescription =
-  'LOGIKIA ofrece consultoría, desarrollo, formación y soporte en agentes inteligentes para sectores comerciales y legales en Colombia.';
-const ogTitle = 'Servicios especializados en inteligencia artificial | LOGIKIA';
+  'Ofrecemos consultoría, desarrollo e integración de agentes IA (SalesMind, LawMind) para optimizar procesos comerciales y legales en Colombia.';
+const ogTitle = 'Servicios de Consultoría y Desarrollo de IA | LOGIKIA';
 ---
 
 <MainLayout
@@ -95,29 +103,86 @@ const ogTitle = 'Servicios especializados en inteligencia artificial | LOGIKIA';
   customDescription={metaDescription}
   customOgTitle={ogTitle}
   structuredData={{
+    /* ======================================================
+       OPTIMIZACIÓN AEO: 
+       Definimos la página Y todos los servicios que ofrece,
+       vinculándolos a la organización principal (LOGIKIA).
+    ====================================================== */
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     '@id': 'https://logikia.co/servicios',
     url: 'https://logikia.co/servicios',
-    name: 'Servicios especializados en inteligencia artificial | LOGIKIA',
+    name: 'Servicios de Consultoría y Desarrollo de IA | LOGIKIA',
     description:
-      'Consultoría, desarrollo e integración de agentes IA confiables para mejorar tus procesos comerciales y legales en Colombia.',
+      'Ofrecemos consultoría, desarrollo e integración de agentes IA (SalesMind, LawMind) para optimizar procesos comerciales y legales en Colombia.',
+    inLanguage: 'es-CO',
     isPartOf: {
       '@type': 'WebSite',
       url: 'https://logikia.co',
       name: 'LOGIKIA',
-      description:
-        'LOGIKIA ofrece soluciones inteligentes personalizadas para el mercado colombiano.',
     },
-    inLanguage: 'es-CO',
+    publisher: {
+      '@type': 'Organization',
+      '@id': 'https://logikia.co#organization', // ID único para LOGIKIA
+      name: 'LOGIKIA',
+      url: 'https://logikia.co',
+      logo: 'https://logikia.co/images/logo.svg', // Asegúrate que esta ruta es correcta
+    },
+    mainEntity: {
+      '@type': 'ItemList',
+      name: 'Servicios de Inteligencia Artificial de LOGIKIA',
+      numberOfItems: 5, // Coincide con tu array de 5 servicios
+      itemListElement: [
+        {
+          '@type': 'Service',
+          position: 1,
+          name: 'Consultoría Estratégica en IA',
+          description:
+            'Acompañamos en la integración de agentes inteligentes (SalesMind, LawMind) y definimos estrategias personalizadas asegurando cumplimiento normativo.',
+          provider: { '@id': 'https://logikia.co#organization' },
+        },
+        {
+          '@type': 'Service',
+          position: 2,
+          name: 'Desarrollo e Integración (Web/WhatsApp)',
+          description:
+            'Implementamos soluciones de IA escalables, integradas en canales y plataformas digitales como WhatsApp y sitios web.',
+          provider: { '@id': 'https://logikia.co#organization' },
+        },
+        {
+          '@type': 'Service',
+          position: 3,
+          name: 'Formación Ética y Soporte Continuo',
+          description:
+            'Capacitamos equipos en el uso de agentes IA y brindamos soporte técnico permanente y actualizaciones de seguridad.',
+          provider: { '@id': 'https://logikia.co#organization' },
+        },
+        {
+          '@type': 'Service',
+          position: 4,
+          name: 'Análisis de Métricas y Optimización ROI',
+          description:
+            'Medimos el impacto de los agentes inteligentes en tus operaciones, generando reportes de eficacia y retorno de inversión (ROI).',
+          provider: { '@id': 'https://logikia.co#organization' },
+        },
+        {
+          '@type': 'Service',
+          position: 5,
+          name: 'Soluciones Verticales (Legal e Inmobiliario)',
+          description:
+            'Diseñamos soluciones IA a medida para los retos y regulaciones de los sectores inmobiliario y legal en Colombia.',
+          provider: { '@id': 'https://logikia.co#organization' },
+        },
+      ],
+    },
   }}
 >
   <MainSection
-    title="Unimos experiencia y tecnología para potenciar tu negocio"
-    subTitle="En LOGIKIA brindamos consultoría, desarrollo, implementación y soporte continuo en inteligencia artificial para sectores comerciales y legales, con un enfoque ético y orientado a resultados."
+    title="Servicios de IA para tu Negocio: De la Estrategia al ROI"
+    subTitle="Acompañamos a empresas en Colombia a implementar agentes IA confiables (SalesMind, LawMind). Ofrecemos consultoría estratégica, desarrollo a medida, integración y soporte ético enfocado en resultados."
     btnExists={true}
     btnTitle="Agenda tu consulta"
-    btnURL="/contact"
+    btnURL="/contacto"
   />
 
   {
@@ -149,24 +214,116 @@ const ogTitle = 'Servicios especializados en inteligencia artificial | LOGIKIA';
     })
   }
 
-  <FeaturesStats
-    title="Datos que respaldan nuestra excelencia"
-    subTitle="El compromiso de LOGIKIA con la calidad y la innovación se refleja en cada proyecto y solución que entregamos."
-    mainStatTitle="98%"
-    mainStatSubTitle="de satisfacción de nuestros clientes"
-    stats={[
-      {
-        stat: '150+',
-        description: 'soluciones IA implementadas',
-      },
-      {
-        stat: '30K+',
-        description: 'consultas automáticas atendidas mensualmente',
-      },
-      {
-        stat: '90%',
-        description: 'reducción en tiempos de respuesta',
-      },
-    ]}
-  />
+  <div class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <div class="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
+      <h2
+        class="text-3xl font-bold tracking-tight text-slate-900 lg:text-4xl dark:text-neutral-200"
+      >
+        Impacto Operacional Proyectado
+      </h2>
+      <p class="mt-3 text-lg text-slate-700 dark:text-neutral-400">
+        Nuestra metodología se enfoca en entregar un Retorno de Inversión (ROI) tangible y rápido.
+      </p>
+    </div>
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
+      <div
+        class="flex flex-col items-center rounded-xl border border-slate-200 bg-slate-50 p-6 text-center dark:border-neutral-800 dark:bg-neutral-900"
+      >
+        <svg
+          class="size-7 flex-shrink-0 text-blue-600 dark:text-blue-500"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path d="M21 11V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h6"></path><path
+            d="m12 12 4 10 3-3-4-10z"></path></svg
+        >
+        <h3 class="mt-3 text-lg font-semibold text-gray-800 dark:text-neutral-200">
+          60-80% Reducción
+        </h3>
+        <p class="mt-1 text-gray-600 dark:text-neutral-400">
+          En tiempo de gestión manual de consultas iniciales (SalesMind).
+        </p>
+      </div>
+
+      <div
+        class="flex flex-col items-center rounded-xl border border-slate-200 bg-slate-50 p-6 text-center dark:border-neutral-800 dark:bg-neutral-900"
+      >
+        <svg
+          class="size-7 flex-shrink-0 text-blue-600 dark:text-blue-500"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"
+          ></path><polyline points="14 2 14 8 20 8"></polyline><path d="m12 15-3-3 3-3"></path><path
+            d="m9 12h7"></path></svg
+        >
+        <h3 class="mt-3 text-lg font-semibold text-gray-800 dark:text-neutral-200">
+          Horas a Minutos
+        </h3>
+        <p class="mt-1 text-gray-600 dark:text-neutral-400">
+          Optimización de tareas de 3 horas (investigación/redacción) a minutos (LawMind).
+        </p>
+      </div>
+
+      <div
+        class="flex flex-col items-center rounded-xl border border-slate-200 bg-slate-50 p-6 text-center dark:border-neutral-800 dark:bg-neutral-900"
+      >
+        <svg
+          class="size-7 flex-shrink-0 text-blue-600 dark:text-blue-500"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><line x1="12" x2="12" y1="20" y2="10"></line><line x1="18" x2="18" y1="20" y2="4"
+          ></line><line x1="6" x2="6" y1="20" y2="16"></line></svg
+        >
+        <h3 class="mt-3 text-lg font-semibold text-gray-800 dark:text-neutral-200">
+          ROI en 3 Meses
+        </h3>
+        <p class="mt-1 text-gray-600 dark:text-neutral-400">
+          Proyección de retorno de inversión tangible en el primer trimestre de operación.
+        </p>
+      </div>
+
+      <div
+        class="flex flex-col items-center rounded-xl border border-slate-200 bg-slate-50 p-6 text-center dark:border-neutral-800 dark:bg-neutral-900"
+      >
+        <svg
+          class="size-7 flex-shrink-0 text-blue-600 dark:text-blue-500"
+          xmlns="http://www.w3.org/2000/svg"
+          width="24"
+          height="24"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"></path></svg
+        >
+        <h3 class="mt-3 text-lg font-semibold text-gray-800 dark:text-neutral-200">
+          Cero Alucinaciones
+        </h3>
+        <p class="mt-1 text-gray-600 dark:text-neutral-400">
+          Garantía de IA confiable, ética y con respuestas 100% verificables y auditables.
+        </p>
+      </div>
+    </div>
+  </div>
 </MainLayout>

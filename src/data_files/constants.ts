@@ -9,7 +9,8 @@ export const SITE = {
     "LOGIKIA integra inteligencia artificial confiable en los procesos legales y comerciales de Colombia. Nuestros agentes Sales Mind y Law Mind ofrecen precisión, ética y contexto nacional, sin alucinaciones, optimizando decisiones empresariales con información verificada.",
   description_short:
     "Agentes IA confiables que impulsan productividad y confianza en empresas y despachos colombianos.",
-  url: "https://logikia.co",
+  //url: "https://logikia.co",
+  url: "https://canomogollon.github.io/ScrewFast/",
   author: "Logikia Technologies",
 };
 
