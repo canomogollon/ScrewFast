@@ -1,107 +1,144 @@
 ---
-// Import necessary components, modules and types
-import MainLayout from "@/layouts/MainLayout.astro";
-import CardBlog from "@components/ui/cards/CardBlog.astro";
-import CardBlogRecent from "@components/ui/cards/CardBlogRecent.astro";
-import CardInsight from "@components/ui/cards/CardInsight.astro";
-import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
-import { SITE } from "@data/constants";
+import MainLayout from '@/layouts/MainLayout.astro';
+import CardBlog from '@components/ui/cards/CardBlog.astro';
+import CardBlogRecent from '@components/ui/cards/CardBlogRecent.astro';
+import CardInsight from '@components/ui/cards/CardInsight.astro';
+import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { SITE } from '@data/constants';
 
-// Get all blogs post in English and sort them based on publish date
+// --- Lógica de Posts (Sin cambios, es perfecta) ---
+const spanishBlogEntries = await getCollection('blog', ({ id }) => id.startsWith('es/'));
+const spanishInsightsEntries = await getCollection('insights', ({ id }) => id.startsWith('es/'));
 
-const englishBlogEntries = await getCollection("blog", ({ id }) => {
-  return id.startsWith("en/");
-});
-
-const englishInsightsEntries = await getCollection("insights", ({ id }) => {
-  return id.startsWith("en/");
-});
-
-const blogPosts: CollectionEntry<"blog">[] = englishBlogEntries.sort(
-  (a: CollectionEntry<"blog">, b: CollectionEntry<"blog">) =>
-    b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+const blogPosts: CollectionEntry<'blog'>[] = spanishBlogEntries.sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
-// Get all insights posts
-const insightPosts: CollectionEntry<"insights">[] = englishInsightsEntries;
 
-// Separate the most recent post from others
-const mostRecentPost: CollectionEntry<"blog"> = blogPosts[0];
-const otherPosts: CollectionEntry<"blog">[] = blogPosts.slice(1);
+const insightPosts: CollectionEntry<'insights'>[] = spanishInsightsEntries;
 
-// Define variables for page content
-const title: string = "Your Gateway to Construction Excellence";
+// Protección contra arrays vacíos
+const mostRecentPost: CollectionEntry<'blog'> | undefined = blogPosts[0];
+const otherPosts: CollectionEntry<'blog'>[] = blogPosts.slice(1);
+
+// --- Contenido de la Página (Refinado para AEO) ---
+const title: string = 'Blog de IA Confiable y Aplicada en Colombia';
 const subTitle: string =
-  "Explore the latest news, tips, and insights from ScrewFast to enhance your construction projects. From product spotlights to project management strategies, our blog is your go-to resource for all things hardware and construction.";
-const secondTitle: string = "Insights";
+  'Análisis, guías y noticias sobre inteligencia artificial aplicada al mercado colombiano. Descubre cómo nuestros agentes (SalesMind, LawMind) y la tecnología confiable potencian los sectores comercial y jurídico.';
+const secondTitle: string = 'Perspectivas y Análisis de Expertos';
 const secondSubTitle: string =
-  "Stay up-to-date with the latest trends and developments in the construction industry with insights from ScrewFast's team of industry experts. ";
+  'Explora artículos de fondo sobre las tendencias en IA, ética y herramientas que están moldeando el futuro digital de las empresas en Colombia.';
 
-const pageTitle: string = `Blog | ${SITE.title}`;
+// --- Metadatos SEO (Refinados) ---
+const pageTitle: string = `Blog de IA Confiable | LOGIKIA`;
 const metaDescription =
-  "Stay up-to-date with the latest trends and developments in the construction industry with insights from ScrewFast's team of industry experts.";
-const ogTitle = "Construction Industry Blog | ScrewFast";
+  'Análisis y guías de IA aplicada en Colombia. Lee sobre agentes comerciales (SalesMind), jurídicos (LawMind) y el impacto de la IA ética en tu negocio.';
+const ogTitle = 'Blog de IA Confiable y Aplicada en Colombia | LOGIKIA';
+
+// ======================================================
+// OPTIMIZACIÓN AEO: Generar ItemList para Structured Data
+// ======================================================
+// Procesar solo los posts de blog que tienen pubDate
+const blogItemList = blogPosts.map((post, index) => {
+  const postSlug = post.id.replace(/^es\//, '');
+
+  return {
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'BlogPosting',
+      '@id': `${SITE.url}/blog/${postSlug}`,
+      headline: post.data.title,
+      datePublished: post.data.pubDate.toISOString(),
+      author: { '@id': `${SITE.url}#organization` },
+      publisher: { '@id': `${SITE.url}#organization` },
+    },
+  };
+});
+
+// Procesar insights por separado (sin pubDate)
+const insightItemList = insightPosts.map((post, index) => {
+  const postSlug = post.id.replace(/^es\//, '');
+
+  return {
+    '@type': 'ListItem',
+    position: blogPosts.length + index + 1,
+    item: {
+      '@type': 'Article',
+      '@id': `${SITE.url}/insights/${postSlug}`,
+      headline: post.data.title,
+      description: post.data.description,
+      author: { '@id': `${SITE.url}#organization` },
+      publisher: { '@id': `${SITE.url}#organization` },
+    },
+  };
+});
+
+// Combinar ambas listas
+const schemaItemList = [...blogItemList, ...insightItemList];
 ---
 
 <MainLayout
   title={pageTitle}
   customDescription={metaDescription}
   customOgTitle={ogTitle}
-  structuredData={{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://screwfast.uk/blog",
-    url: "https://screwfast.uk/blog",
-    name: "Blog | ScrewFast",
-    description:
-      "Stay up-to-date with the latest trends and developments in the construction industry with insights from ScrewFast's team of industry experts.",
-    isPartOf: {
-      "@type": "WebSite",
-      url: "https://screwfast.uk",
-      name: "ScrewFast",
-      description:
-        "ScrewFast offers top-tier hardware tools and expert construction services to meet all your project needs.",
+  structuredData={[
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Blog',
+      '@id': `${SITE.url}/blog`,
+      url: `${SITE.url}/blog`,
+      name: 'Blog de IA Confiable | LOGIKIA',
+      description: metaDescription,
+      inLanguage: 'es-CO',
+      publisher: {
+        '@id': `${SITE.url}#organization`,
+      },
+      mainEntity: {
+        '@type': 'ItemList',
+        name: 'Artículos Recientes del Blog de LOGIKIA',
+        itemListElement: schemaItemList,
+      },
     },
-    inLanguage: "en-US",
-  }}
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      '@id': `${SITE.url}#organization`,
+      name: 'LOGIKIA',
+      url: SITE.url,
+      logo: `${SITE.url}/images/logo.svg`,
+      sameAs: [],
+    },
+  ]}
 >
-  <section
-    class="mx-auto max-w-[85rem] space-y-8 px-4 pt-16 sm:px-6 lg:px-8 2xl:max-w-full"
-  >
-    {/* Page header */}
+  <section class="mx-auto max-w-[85rem] space-y-8 px-4 pt-16 sm:px-6 lg:px-8 2xl:max-w-full">
     <div class="mx-auto max-w-3xl text-left sm:text-center">
       <h1
         class="block text-4xl font-bold tracking-tight text-balance text-neutral-800 md:text-5xl lg:text-6xl dark:text-neutral-200"
       >
         {title}
       </h1>
-
-      <p
-        class="mt-4 text-lg text-pretty text-neutral-600 dark:text-neutral-400"
-      >
+      <p class="mt-4 text-lg text-pretty text-neutral-600 dark:text-neutral-400">
         {subTitle}
       </p>
     </div>
   </section>
 
-  <section
-    class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
-  >
-    {/* Blog posts grid */}
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
     <div class="grid gap-6 lg:grid-cols-2">
       {otherPosts.map((blogEntry) => <CardBlog blogEntry={blogEntry} />)}
     </div>
   </section>
-  {/* Most recent blog post */}
-  <section
-    class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
-  >
-    <CardBlogRecent blogEntry={mostRecentPost} />
-  </section>
-  {/* Insights section */}
-  <section
-    class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full"
-  >
+
+  {
+    mostRecentPost && (
+      <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
+        <CardBlogRecent blogEntry={mostRecentPost} />
+      </section>
+    )
+  }
+
+  <section class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 2xl:max-w-full">
     <div class="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
       <h2
         class="text-2xl font-bold text-neutral-800 md:text-4xl md:leading-tight dark:text-neutral-200"
@@ -113,11 +150,7 @@ const ogTitle = "Construction Industry Blog | ScrewFast";
       </p>
     </div>
     <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-      {
-        insightPosts.map((insightEntry) => (
-          <CardInsight insightEntry={insightEntry} />
-        ))
-      }
+      {insightPosts.map((insightEntry) => <CardInsight insightEntry={insightEntry} />)}
     </div>
   </section>
 </MainLayout>

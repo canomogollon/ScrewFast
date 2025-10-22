@@ -1,5 +1,4 @@
 ---
-// Import necessary components and utilities
 import MainLayout from '@/layouts/MainLayout.astro';
 import AvatarBlogLarge from '@components/ui/avatars/AvatarBlogLarge.astro';
 import CardRelated from '@components/ui/cards/CardRelated.astro';
@@ -8,163 +7,209 @@ import SocialShare from '@components/ui/buttons/SocialShare.astro';
 import PostFeedback from '@components/ui/feedback/PostFeedback.astro';
 import { Image } from 'astro:assets';
 import { capitalize, formatDate } from '@utils/utils';
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry, render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { SITE } from '@data/constants';
 
-// Update getStaticPaths for English posts
+// ======================================================
+// 1. OPTIMIZACIÓN: Usar getEntry para el post actual (más eficiente)
+// ======================================================
 export async function getStaticPaths() {
-  const blogPosts = await getCollection('blog', ({ id }) => id.startsWith('en/'));
-  return blogPosts.map((post) => {
-    const idWithoutLang = post.id.replace(/^es\//, ''); // Remove the "en/" prefix
-    return {
-      params: { id: idWithoutLang },
-      props: { post },
-    };
-  });
+  const blogPosts = await getCollection('blog', ({ id }) => id.startsWith('es/'));
+  return blogPosts.map((post) => ({
+    params: { id: post.id.replace(/^es\//, '') },
+    props: { postId: post.id }, // Solo pasar el ID, no todo el objeto
+  }));
 }
 
-// Get the current post's data
-const { post } = Astro.props;
+const { postId } = Astro.props;
 
-const blogPosts: CollectionEntry<'blog'>[] = await getCollection('blog', ({ id }) =>
-  id.startsWith('en/'),
-);
+// Usar getEntry es más eficiente que pasar todo el objeto
+const post = await getEntry('blog', postId);
+if (!post) {
+  return Astro.redirect('/404');
+}
 
-// Filter out the current post to get related posts
-// Note: This is a very basic way of choosing related posts, just for the purpose of the example.
-// In a production site, you might want to implement a more robust algorithm, choosing related posts based on tags, categories, dates, authors, or keywords.
-// See example: https://blog.codybrunner.com/2024/adding-related-articles-with-astro-content-collections/
-const relatedPosts: CollectionEntry<'blog'>[] = blogPosts.filter(
-  (blogEntry) => blogEntry.id !== post.id,
-);
+// Renderizar contenido solo cuando sea necesario
+const { Content } = await render(post);
 
-const pageTitle: string = `${post.data.title} | ${SITE.title}`;
-// For the meta description, use the first paragraph of content if available
-const metaDescription = post.data.contents[0] || `Read ${post.data.title} on ScrewFast's blog`;
+// ======================================================
+// 2. OPTIMIZACIÓN: Función de posts relacionados más eficiente
+// ======================================================
+async function getRelatedPosts(currentPost: CollectionEntry<'blog'>, limit = 2) {
+  const allPosts = await getCollection(
+    'blog',
+    ({ id }) => id.startsWith('es/') && id !== currentPost.id,
+  );
+
+  // Si no hay tags, devolver posts más recientes
+  if (!currentPost.data.tags || currentPost.data.tags.length === 0) {
+    return allPosts
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+      .slice(0, limit);
+  }
+
+  // Algoritmo de relevancia por tags compartidos
+  const relatedWithScores = allPosts.map((relatedPost) => {
+    const sharedTags = currentPost.data.tags!.filter((tag) =>
+      relatedPost.data.tags?.includes(tag),
+    ).length;
+
+    return {
+      post: relatedPost,
+      score: sharedTags,
+      recency: relatedPost.data.pubDate.valueOf(),
+    };
+  });
+
+  // Ordenar por relevancia (tags compartidos) y luego por recencia
+  return relatedWithScores
+    .filter((item) => item.score > 0)
+    .sort((a, b) => {
+      if (a.score === b.score) {
+        return b.recency - a.recency; // Si mismo score, más reciente primero
+      }
+      return b.score - a.score; // Más tags compartidos primero
+    })
+    .slice(0, limit)
+    .map((item) => item.post);
+}
+
+const relatedPosts = await getRelatedPosts(post, 2);
+
+// ======================================================
+// 3. METADATOS OPTIMIZADOS
+// ======================================================
+const pageTitle = `${post.data.title} | ${SITE.title}`;
+const metaDescription =
+  post.data.description || `Lee el artículo "${post.data.title}" en el blog de LOGIKIA.`;
 const ogTitle = `${post.data.title} | Blog | ${SITE.title}`;
+
+// Manejar imagen de forma segura
+const ogImageUrl = post.data.cardImage
+  ? new URL(post.data.cardImage.src, Astro.site).href
+  : `${SITE.url}/images/default-og.jpg`;
+
+// ======================================================
+// 4. STRUCTURED DATA OPTIMIZADO
+// ======================================================
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  '@id': `${SITE.url}/blog/${Astro.params.id}`,
+  headline: post.data.title,
+  description: post.data.excerpt || post.data.description,
+  image: {
+    '@type': 'ImageObject',
+    url: ogImageUrl,
+    width: 1200,
+    height: 630,
+  },
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: post.data.pubDate.toISOString(), // Agregar si tienes fecha de modificación
+  author: {
+    '@type': 'Person',
+    name: post.data.author,
+    image: post.data.authorImage ? new URL(post.data.authorImage.src, Astro.site).href : undefined,
+  },
+  publisher: { '@id': `${SITE.url}#organization` },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `${SITE.url}/blog/${Astro.params.id}`,
+  },
+  keywords: post.data.seoKeywords?.join(', ') || post.data.tags?.join(', ') || undefined,
+  articleSection: post.data.category || undefined,
+  about: post.data.relatedTopics?.map((topic) => ({ '@type': 'Thing', name: topic })) || undefined,
+};
 ---
 
 <MainLayout
   title={pageTitle}
-  customDescription={metaDescription}
+  customDescription={post.data.excerpt || metaDescription}
   customOgTitle={ogTitle}
-  structuredData={{
-    '@context': 'https://schema.org',
-    '@type': 'BlogPosting',
-    headline: post.data.title,
-    image: post.data.cardImage.src,
-    datePublished: post.data.pubDate.toISOString(),
-    author: {
-      '@type': 'Person',
-      name: post.data.author,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: SITE.title,
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://screwfast.uk/favicon.ico',
-      },
-    },
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': `https://screwfast.uk/blog/${post.id.replace(/^en\//, '')}`,
-    },
-  }}
+  {structuredData}
 >
   <section class="mx-auto max-w-3xl px-4 pt-6 pb-12 sm:px-6 lg:px-8 lg:pt-10">
-    <div class="max-w-2xl">
+    <header class="mb-7 max-w-2xl">
       <div class="mb-6 flex items-center justify-between">
         <div class="flex w-full gap-x-5 sm:items-center sm:gap-x-3">
           <AvatarBlogLarge blogEntry={post} />
-          <div class="grow">
-            <div class="flex items-center justify-between gap-x-2">
-              <div>
-                {/* Post metadata and author info */}
-                <span class="font-bold text-neutral-700 dark:text-neutral-300">
-                  {post.data.author}
-                </span>
-                <ul class="text-xs text-neutral-500">
-                  <li
-                    class="relative inline-block pe-6 before:absolute before:end-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-300 last:pe-0 last-of-type:before:hidden dark:text-neutral-400 dark:before:bg-neutral-600"
-                  >
-                    {formatDate(post.data.pubDate)}
-                  </li>
-                  <li
-                    class="relative inline-block pe-6 before:absolute before:end-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-300 last:pe-0 last-of-type:before:hidden dark:text-neutral-400 dark:before:bg-neutral-600"
-                  >
-                    {post.data.readTime} min read
-                  </li>
-                </ul>
-              </div>
+          <div>
+            <span class="font-bold text-neutral-700 dark:text-neutral-300">
+              {post.data.author}
+            </span>
+            <div class="text-xs text-neutral-500">
+              {formatDate(post.data.pubDate)} · {post.data.readTime} min
             </div>
           </div>
         </div>
       </div>
-      {/* Blog post title */}
-      <h2 class="mb-3 text-2xl font-bold text-neutral-800 md:text-3xl dark:text-neutral-200">
-        {post.data.title}
-      </h2>
-      {/* Blog post contents */}
-      <div class="mb-5 space-y-5 md:mb-8 md:space-y-8">
-        {
-          post.data.contents.map((content: string, index: any) =>
-            index === 1 ? (
-              <>
-                <p class="text-lg text-pretty text-neutral-700 dark:text-neutral-300">{content}</p>
-                <Image
-                  class="w-full rounded-xl object-cover"
-                  src={post.data.cardImage}
-                  alt={post.data.cardImageAlt}
-                  draggable={'false'}
-                  format={'avif'}
-                />
-              </>
-            ) : (
-              <p class="text-lg text-pretty text-neutral-700 dark:text-neutral-300">{content}</p>
-            ),
-          )
-        }
-      </div>
-      <div
-        class="mx-auto grid max-w-(--breakpoint-lg) gap-y-5 sm:flex sm:items-center sm:justify-between sm:gap-y-0"
+      <h1
+        class="mb-2 text-3xl font-extrabold tracking-tight text-neutral-800 md:text-4xl dark:text-neutral-200"
       >
-        {/* Blog post tags */}
-        <div class="flex flex-wrap gap-x-2 gap-y-1 sm:flex-nowrap sm:items-center sm:gap-y-0">
-          {
-            post.data.tags?.map((tag: string) => (
+        {post.data.title}
+      </h1>
+
+      <p class="mb-4 text-lg text-pretty text-neutral-700 dark:text-neutral-300">
+        {post.data.description}
+      </p>
+
+      {
+        post.data.tags && post.data.tags.length > 0 && (
+          <div class="mb-7 flex flex-wrap gap-2">
+            {post.data.tags.map((tag: string) => (
               <span class="inline-flex items-center gap-x-1.5 rounded-lg bg-neutral-400/30 px-3 py-1.5 text-xs font-medium text-neutral-700 outline-hidden focus:outline-hidden focus-visible:ring-3 focus-visible:outline-hidden dark:bg-neutral-700/60 dark:text-neutral-300">
                 {capitalize(tag)}
               </span>
-            ))
-          }
-        </div>
-        {/* Bookmark and Share buttons */}
-        <div class="flex items-center justify-end gap-x-1.5">
-          <Bookmark />
-          <div class="mx-3 block h-4 border-e border-neutral-400 dark:border-neutral-500"></div>
-          <div class="inline-flex">
-            <SocialShare pageTitle={post.data.title} />
+            ))}
           </div>
-        </div>
+        )
+      }
+
+      <Image
+        class="mb-9 w-full rounded-xl object-cover shadow-lg"
+        src={post.data.cardImage}
+        alt={post.data.cardImageAlt}
+        draggable={'false'}
+        format={'avif'}
+        loading={'eager'}
+        width={800}
+        height={450}
+      />
+    </header>
+
+    <!-- Contenido del post -->
+    <article
+      class="prose dark:prose-invert md:prose-lg mb-10 max-w-none text-neutral-700 dark:text-neutral-300"
+    >
+      <Content />
+    </article>
+
+    <div class="mb-8">
+      <div class="flex items-center gap-x-3">
+        <Bookmark />
+        <SocialShare pageTitle={post.data.title} />
       </div>
     </div>
-    <PostFeedback title="Was this post helpful?" firstChoice="Yes" secondChoice="No" />
+
+    <PostFeedback title="¿Te fue útil este artículo?" firstChoice="Sí" secondChoice="No" />
   </section>
 
-  {/* Related articles section */}
-  <section class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-    <div class="mb-10 max-w-2xl">
-      <h2
-        class="text-2xl font-bold text-balance text-neutral-800 md:text-4xl md:leading-tight dark:text-neutral-200"
-      >
-        Related articles
-      </h2>
-    </div>
+  {
+    relatedPosts.length > 0 && (
+      <section class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <div class="mb-10 max-w-2xl">
+          <h2 class="text-2xl font-bold text-balance text-neutral-800 md:text-4xl md:leading-tight dark:text-neutral-200">
+            Artículos Relacionados
+          </h2>
+        </div>
 
-    <div class="grid grid-cols-2 gap-6">
-      {relatedPosts.map((entry) => <CardRelated blogEntry={entry} />)}
-    </div>
-  </section>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          {relatedPosts.map((entry) => (
+            <CardRelated blogEntry={entry} />
+          ))}
+        </div>
+      </section>
+    )
+  }
 </MainLayout>

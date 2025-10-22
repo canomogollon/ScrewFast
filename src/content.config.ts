@@ -88,18 +88,30 @@ const productsCollection = defineCollection({
 const blogCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/blog" }),
   schema: ({ image }) => z.object ({
-  title: z.string(),
-  description: z.string(),
-  contents: z.array(z.string()),
-  author: z.string(),
-  role: z.string().optional(),
-  authorImage: image(),
-  authorImageAlt: z.string(),
-  pubDate: z.date(),
-  cardImage: image(),
-  cardImageAlt: z.string(),
-  readTime: z.number(),
-  tags: z.array(z.string()).optional(),
+  // Campos obligatorios
+    title: z.string(),
+    description: z.string(),
+    author: z.string(),
+    authorImage: image(),
+    authorImageAlt: z.string(),
+    pubDate: z.date(),
+    cardImage: image(),
+    cardImageAlt: z.string(),
+    readTime: z.number(),
+    
+    // Campos opcionales para SEO/organización
+    tags: z.array(z.string()).optional(),
+    excerpt: z.string().optional(),
+    category: z.string().optional(),
+    featured: z.boolean().default(false),
+    relatedTopics: z.array(z.string()).optional(),
+    
+    // Opcional: Para compatibilidad con el sistema actual
+    //contents: z.array(z.string()).optional(),
+    
+    // Campos avanzados opcionales
+    seoKeywords: z.array(z.string()).optional(),
+    lastModified: z.date().optional(),
   }),
 });
 

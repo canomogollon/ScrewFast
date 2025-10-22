@@ -10,9 +10,9 @@ import mdx from "@astrojs/mdx";
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
   site: "https://canomogollon.github.io/ScrewFast/",
-  base: "/ScrewFast/",
-  output: "static",
-  trailingSlash: "never",
+  //   base: "/ScrewFast/",
+  //output: "static",
+  //trailingSlash: "never",
   image: {
     domains: ["images.unsplash.com"],
   },
@@ -40,7 +40,6 @@ export default defineConfig({
     }),
     starlight({
       title: "LOGIKIA DOCS",
-      title: "LogikIA Docs",
       // https://github.com/withastro/starlight/blob/main/packages/starlight/CHANGELOG.md
       // If no Astro and Starlight i18n configurations are provided, the built-in default locale is used in Starlight and a matching Astro i18n configuration is generated/used.
       // If only a Starlight i18n configuration is provided, an equivalent Astro i18n configuration is generated/used.
