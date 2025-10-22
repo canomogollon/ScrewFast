@@ -1,13 +1,38 @@
 ---
-// Import the necessary components
-import MainLayout from "@/layouts/MainLayout.astro";
-import ContactSection from "@components/sections/misc/ContactSection.astro";
-import { SITE } from "@data/constants";
+import MainLayout from '@/layouts/MainLayout.astro';
+import ContactSection from '@components/sections/misc/ContactSection.astro';
+import { SITE } from '@data/constants';
 
-const pageTitle: string = `Contact | ${SITE.title}`;
+const pageTitle = `Contacto | LOGIKIA IA Confiable`;
 const metaDescription =
-  "Have questions or want to discuss a project? Reach out, and let's craft the perfect solution with our tools and services.";
-const ogTitle = "Contact Us | ScrewFast";
+  '¿Tienes preguntas o deseas conocer cómo la inteligencia artificial confiable puede transformar tu empresa? Contáctanos y descubre soluciones personalizadas en IA para el contexto colombiano.';
+const ogTitle = 'Contáctanos | LOGIKIA IA Confiable';
+
+const contactInfo = {
+  knowledgebase: {
+    heading: 'Base de Conocimiento',
+    content: 'Consulta todos nuestros artículos y guías detalladas.',
+    linkTitle: 'Visitar guías y tutoriales',
+    linkURL: '/base-de-conocimiento',
+  },
+  faq: {
+    heading: 'Preguntas frecuentes',
+    content: 'Resuelve tus dudas con nuestra sección FAQ clara y práctica.',
+    linkTitle: 'Ir a preguntas frecuentes',
+    linkURL: '/faq',
+  },
+  office: {
+    heading: 'Visítanos en nuestra oficina',
+    content: 'Bogotá, Colombia - LOGIKIA Sede Central',
+    addressContent: 'Cra 15 #124-56, Bogotá, Colombia',
+  },
+  email: {
+    heading: 'Contáctanos por correo electrónico',
+    content: 'Prefieres escribirnos? Envía un correo a',
+    linkTitle: 'contacto@logikia.co',
+    linkURL: 'mailto:contacto@logikia.co',
+  },
+};
 ---
 
 <MainLayout
@@ -15,22 +40,28 @@ const ogTitle = "Contact Us | ScrewFast";
   customDescription={metaDescription}
   customOgTitle={ogTitle}
   structuredData={{
-    "@context": "https://schema.org",
-    "@type": "WebPage",
-    "@id": "https://screwfast.uk/contact",
-    url: "https://screwfast.uk/contact",
-    name: "Contact Us | ScrewFast",
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    '@id': 'https://logikia.co/contacto',
+    url: 'https://logikia.co/contacto',
+    name: 'Página de Contacto | LOGIKIA',
     description:
-      "Have questions or want to discuss a project? Reach out, and let's craft the perfect solution with our tools and services.",
+      'Contáctanos para asesoría especializada en soluciones de inteligencia artificial ética y confiable para empresas en Colombia.',
     isPartOf: {
-      "@type": "WebSite",
-      url: "https://screwfast.uk",
-      name: "ScrewFast",
+      '@type': 'WebSite',
+      url: 'https://logikia.co',
+      name: 'LOGIKIA',
       description:
-        "ScrewFast offers top-tier hardware tools and expert construction services to meet all your project needs.",
+        'LOGIKIA ofrece agentes de inteligencia artificial confiables y personalizados para el mercado colombiano.',
     },
-    inLanguage: "en-US",
+    inLanguage: 'es-CO',
   }}
 >
-  <ContactSection />
+  <ContactSection
+    title="¿Quieres transformar tu empresa con IA confiable?"
+    subTitle="Déjanos tus datos y un experto de LOGIKIA te contactará para entender tus necesidades y construir juntos la solución ideal."
+    formTitle="Completa el formulario"
+    formSubTitle="Te responderemos en 1-2 días hábiles."
+    {contactInfo}
+  />
 </MainLayout>
