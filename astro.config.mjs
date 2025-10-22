@@ -9,7 +9,9 @@ import mdx from "@astrojs/mdx";
 // https://astro.build/config
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
-  site: `https://canomogollon.github.io${process.env.BASE_URL || "/"}`,
+  site: "https://canomogollon.github.io",
+  base: "/ScrewFast",
+  //site: `https://canomogollon.github.io${process.env.BASE_URL || "/"}`,
   //base: process.env.BASE_URL,
   //output: "static",
   //trailingSlash: "never",
