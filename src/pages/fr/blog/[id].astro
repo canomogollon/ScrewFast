@@ -1,47 +1,105 @@
 ---
-// Import necessary components and utilities
-import MainLayout from "@/layouts/MainLayout.astro";
-import AvatarBlogLarge from "@components/ui/avatars/AvatarBlogLarge.astro";
-import CardRelated from "@components/ui/cards/CardRelated.astro";
-import Bookmark from "@components/ui/buttons/Bookmark.astro";
-import SocialShare from "@components/ui/buttons/SocialShare.astro";
-import PostFeedback from "@components/ui/feedback/PostFeedback.astro";
-import { Image } from "astro:assets";
-import { capitalize, formatDate } from "@utils/utils";
-import { getCollection } from "astro:content";
-import type { CollectionEntry } from "astro:content";
-import { SITE } from "@data/constants";
+import MainLayout from '@/layouts/MainLayout.astro';
+import AvatarBlogLarge from '@components/ui/avatars/AvatarBlogLarge.astro';
+import CardRelated from '@components/ui/cards/CardRelated.astro';
+import Bookmark from '@components/ui/buttons/Bookmark.astro';
+import SocialShare from '@components/ui/buttons/SocialShare.astro';
+import { Image } from 'astro:assets';
+import { capitalize, formatDate } from '@utils/utils';
+import { getCollection, getEntry, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
+import { SITE } from '@data/constants';
 
-// Update getStaticPaths for French posts
 export async function getStaticPaths() {
-  const blogPosts = await getCollection("blog", ({ id }) =>
-    id.startsWith("fr/")
-  );
-  return blogPosts.map((post) => {
-    const idWithoutLang = post.id.replace(/^fr\//, ""); // Remove the "fr/" prefix
-    return {
-      params: { lang: "fr", id: idWithoutLang },
-      props: { post },
-    };
-  });
+  const blogPosts = await getCollection('blog', ({ id }) => id.startsWith('fr/'));
+  return blogPosts.map((post) => ({
+    params: { id: post.id.replace(/^fr\//, '') },
+    props: { postId: post.id },
+  }));
 }
 
-const { post } = Astro.props;
+const { postId } = Astro.props;
 
-// Fetch related posts
-const blogPosts: CollectionEntry<"blog">[] = await getCollection(
-  "blog",
-  ({ id }) => id.startsWith("fr/")
-);
-const relatedPosts: CollectionEntry<"blog">[] = blogPosts.filter(
-  (blogEntry) => blogEntry.id !== post.id
-);
+const post = await getEntry('blog', postId);
+if (!post) {
+  return Astro.redirect('/404');
+}
 
-const pageTitle: string = `${post.data.title} | ${SITE.title}`;
-// For the meta description, use the first paragraph of content if available
-const metaDescription =
-  post.data.contents[0] || `Lisez ${post.data.title} sur le blog de ScrewFast`;
+const { Content } = await render(post);
+
+async function getRelatedPosts(currentPost: CollectionEntry<'blog'>, limit = 2) {
+  const allPosts = await getCollection(
+    'blog',
+    ({ id }) => id.startsWith('fr/') && id !== currentPost.id,
+  );
+
+  if (!currentPost.data.tags || currentPost.data.tags.length === 0) {
+    return allPosts
+      .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+      .slice(0, limit);
+  }
+
+  const relatedWithScores = allPosts.map((relatedPost) => {
+    const sharedTags = currentPost.data.tags!.filter((tag) =>
+      relatedPost.data.tags?.includes(tag),
+    ).length;
+
+    return {
+      post: relatedPost,
+      score: sharedTags,
+      recency: relatedPost.data.pubDate.valueOf(),
+    };
+  });
+
+  return relatedWithScores
+    .filter((item) => item.score > 0)
+    .sort((a, b) => {
+      if (a.score === b.score) {
+        return b.recency - a.recency;
+      }
+      return b.score - a.score;
+    })
+    .slice(0, limit)
+    .map((item) => item.post);
+}
+
+const relatedPosts = await getRelatedPosts(post, 2);
+
+const pageTitle = `${post.data.title} | ${SITE.title}`;
+const metaDescription = post.data.excerpt || `Lisez "${post.data.title}" sur le blog de LOGIKIA.`;
 const ogTitle = `${post.data.title} | Blog | ${SITE.title}`;
+const ogImageUrl = post.data.cardImage
+  ? new URL(post.data.cardImage.src, Astro.site).href
+  : `${SITE.url}/images/default-og-blog.jpg`;
+
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  '@id': `${SITE.url}/fr/blog/${Astro.params.id}`,
+  headline: post.data.title,
+  description: post.data.excerpt || post.data.description,
+  image: {
+    '@type': 'ImageObject',
+    url: ogImageUrl,
+    width: 1200,
+    height: 630,
+  },
+  datePublished: post.data.pubDate.toISOString(),
+  dateModified: post.data.lastModified?.toISOString() || post.data.pubDate.toISOString(),
+  author: {
+    '@type': 'Person',
+    name: post.data.author,
+    image: post.data.authorImage ? new URL(post.data.authorImage.src, Astro.site).href : undefined,
+  },
+  publisher: { '@id': `${SITE.url}#organization` },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `${SITE.url}/fr/blog/${Astro.params.id}`,
+  },
+  keywords: post.data.seoKeywords?.join(', ') || post.data.tags?.join(', ') || undefined,
+  articleSection: post.data.category || undefined,
+  about: post.data.relatedTopics?.map((topic) => ({ '@type': 'Thing', name: topic })) || undefined,
+};
 ---
 
 <MainLayout
@@ -49,148 +107,86 @@ const ogTitle = `${post.data.title} | Blog | ${SITE.title}`;
   lang="fr"
   customDescription={metaDescription}
   customOgTitle={ogTitle}
-  structuredData={{
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    headline: post.data.title,
-    image: post.data.cardImage.src,
-    datePublished: post.data.pubDate.toISOString(),
-    author: {
-      "@type": "Person",
-      name: post.data.author,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: SITE.title,
-      logo: {
-        "@type": "ImageObject",
-        url: "https://screwfast.uk/favicon.ico",
-      },
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `https://screwfast.uk/fr/blog/${post.id.replace(/^fr\//, "")}`,
-    },
-    inLanguage: "fr",
-  }}
+  {structuredData}
 >
   <section class="mx-auto max-w-3xl px-4 pt-6 pb-12 sm:px-6 lg:px-8 lg:pt-10">
-    <div class="max-w-2xl">
+    <header class="mb-7 max-w-2xl">
       <div class="mb-6 flex items-center justify-between">
         <div class="flex w-full gap-x-5 sm:items-center sm:gap-x-3">
           <AvatarBlogLarge blogEntry={post} />
-          <div class="grow">
-            <div class="flex items-center justify-between gap-x-2">
-              <div>
-                <div
-                  class="hs-tooltip inline-block [--placement:bottom] [--trigger:hover]"
-                >
-                  {/* Post metadata and author info */}
-                  <span
-                    class="font-bold text-neutral-700 dark:text-neutral-300"
-                  >
-                    {post.data.author}
-                  </span>
-                </div>
-                <ul class="text-xs text-neutral-500">
-                  <li
-                    class="relative inline-block pe-6 before:absolute before:end-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-300 last:pe-0 last-of-type:before:hidden dark:text-neutral-400 dark:before:bg-neutral-600"
-                  >
-                    {formatDate(post.data.pubDate)}
-                  </li>
-                  <li
-                    class="relative inline-block pe-6 before:absolute before:end-2 before:top-1/2 before:size-1 before:-translate-y-1/2 before:rounded-full before:bg-neutral-300 last:pe-0 last-of-type:before:hidden dark:text-neutral-400 dark:before:bg-neutral-600"
-                  >
-                    {post.data.readTime} min read
-                  </li>
-                </ul>
-              </div>
+          <div>
+            <span class="font-bold text-neutral-700 dark:text-neutral-300">
+              {post.data.author}
+            </span>
+            <div class="text-xs text-neutral-500">
+              {formatDate(post.data.pubDate)} · {post.data.readTime} min de lecture
             </div>
           </div>
         </div>
       </div>
-      {/* Blog post title */}
-      <h2
-        class="mb-3 text-2xl font-bold text-neutral-800 md:text-3xl dark:text-neutral-200"
+      <h1
+        class="mb-2 text-3xl font-extrabold tracking-tight text-neutral-800 md:text-4xl dark:text-neutral-200"
       >
         {post.data.title}
-      </h2>
-      {/* Blog post contents */}
-      <div class="mb-5 space-y-5 md:mb-8 md:space-y-8">
-        {
-          post.data.contents.map((content: string, index: any) =>
-            index === 1 ? (
-              <>
-                <p class="text-lg text-pretty text-neutral-700 dark:text-neutral-300">
-                  {content}
-                </p>
-                <Image
-                  class="w-full rounded-xl object-cover"
-                  src={post.data.cardImage}
-                  alt={post.data.cardImageAlt}
-                  draggable={"false"}
-                  format={"avif"}
-                />
-              </>
-            ) : (
-              <p class="text-lg text-pretty text-neutral-700 dark:text-neutral-300">
-                {content}
-              </p>
-            )
-          )
-        }
-      </div>
-      <div
-        class="mx-auto grid max-w-(--breakpoint-lg) gap-y-5 sm:flex sm:items-center sm:justify-between sm:gap-y-0"
-      >
-        {/* Blog post tags */}
-        <div
-          class="flex flex-wrap gap-x-2 gap-y-1 sm:flex-nowrap sm:items-center sm:gap-y-0"
-        >
-          {
-            post.data.tags?.map((tag: string) => (
+      </h1>
+
+      <p class="mb-4 text-lg text-pretty text-neutral-700 dark:text-neutral-300">
+        {post.data.description}
+      </p>
+
+      {
+        post.data.tags && post.data.tags.length > 0 && (
+          <div class="mb-7 flex flex-wrap gap-2">
+            {post.data.tags.map((tag: string) => (
               <span class="inline-flex items-center gap-x-1.5 rounded-lg bg-neutral-400/30 px-3 py-1.5 text-xs font-medium text-neutral-700 outline-hidden focus:outline-hidden focus-visible:ring-3 focus-visible:outline-hidden dark:bg-neutral-700/60 dark:text-neutral-300">
                 {capitalize(tag)}
               </span>
-            ))
-          }
-        </div>
-        {/* Bookmark and Share buttons */}
-        <div class="flex items-center justify-end gap-x-1.5">
-          <Bookmark />
-          <div
-            class="mx-3 block h-4 border-e border-neutral-400 dark:border-neutral-500"
-          >
+            ))}
           </div>
-          <div class="inline-flex">
-            <SocialShare pageTitle={post.data.title} />
-          </div>
-        </div>
+        )
+      }
+
+      <Image
+        class="mb-9 w-full rounded-xl object-cover shadow-lg"
+        src={post.data.cardImage}
+        alt={post.data.cardImageAlt}
+        draggable={'false'}
+        format={'avif'}
+        loading={'eager'}
+        width={800}
+        height={450}
+      />
+    </header>
+
+    <article
+      class="prose dark:prose-invert md:prose-lg mb-10 max-w-none text-neutral-700 dark:text-neutral-300"
+    >
+      <Content />
+    </article>
+
+    <div class="mb-8">
+      <div class="flex items-center gap-x-3">
+        <Bookmark />
+        <SocialShare pageTitle={post.data.title} />
       </div>
     </div>
-    <PostFeedback
-      title="Cet article était-il utile?"
-      firstChoice="Oui"
-      secondChoice="Non"
-    />
   </section>
 
-  {/* Related articles section */}
-  <section class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
-    <div class="mb-10 max-w-2xl">
-      <h2
-        class="text-2xl font-bold text-balance text-neutral-800 md:text-4xl md:leading-tight dark:text-neutral-200"
-      >
-        Articles connexes
-      </h2>
-    </div>
+  {
+    relatedPosts.length > 0 && (
+      <section class="mx-auto max-w-3xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <div class="mb-10 max-w-2xl">
+          <h2 class="text-2xl font-bold text-balance text-neutral-800 md:text-4xl md:leading-tight dark:text-neutral-200">
+            Articles Connexes
+          </h2>
+        </div>
 
-    <div class="grid grid-cols-2 gap-6">
-      {
-        relatedPosts.map((entry) => (
-          <CardRelated blogEntry={entry} recentBlogLocale="fr" />
-        ))
-      }
-    </div>
-  </section>
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+          {relatedPosts.map((entry) => (
+            <CardRelated blogEntry={entry} recentBlogLocale="fr" />
+          ))}
+        </div>
+      </section>
+    )
+  }
 </MainLayout>

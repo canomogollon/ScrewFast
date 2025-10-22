@@ -384,7 +384,7 @@ const structuredData = {
 
     const headings: NodeListOf<HTMLElement> = article
       ? article.querySelectorAll('h2, h3, h4, h5, h6')
-      : document.querySelectorAll([]);
+      : document.querySelectorAll('');
 
     headings.forEach((heading, i) => {
       if (heading instanceof HTMLElement) {

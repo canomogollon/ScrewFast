@@ -3,8 +3,14 @@
     "Astro docs": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "mcp-remote", "https://mcp.docs.astro.build/mcp"],
-      "alwaysAllow": ["search_astro_docs"]
+      "args": [
+        "-y",
+        "mcp-remote",
+        "https://mcp.docs.astro.build/mcp"
+      ],
+      "alwaysAllow": [
+        "search_astro_docs"
+      ]
     },
     "playwright": {
       "command": "npx",
@@ -27,7 +33,8 @@
         "browser_navigate",
         "browser_click",
         "browser_evaluate",
-        "browser_wait_for"
+        "browser_wait_for",
+        "browser_close"
       ],
       "env": {
         "PLAYWRIGHT_BROWSERS_PATH": "0"
@@ -40,7 +47,9 @@
         "mcp-remote@0.1.29",
         "https://gitmcp.io/canomogollon/ScrewFast"
       ],
-      "alwaysAllow": ["search_ScrewFast_code"]
+      "alwaysAllow": [
+        "search_ScrewFast_code"
+      ]
     },
     "git": {
       "command": "npx",

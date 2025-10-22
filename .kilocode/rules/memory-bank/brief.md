@@ -2,7 +2,7 @@
 
 ## Descripción General
 
-Proyecto Logikia es el sitio web basado en la plantilla <https://github.com/mearashadowfax/ScrewFast> usando  AstroJS y Starlight para la documentacion viva para los usuarios finales/externos, diseñado para proporcionar una experiencia de navegacion y comercializacion exitosa de los productos/servicios de LOGIKIA con soporte multilingüe EN/ES.
+Proyecto Logikia es el sitio web basado en la plantilla <https://github.com/mearashadowfax/ScrewFast> usando  AstroJS y Starlight para la documentacion viva para los usuarios finales/externos, diseñado para proporcionar una experiencia de navegacion y comercializacion exitosa de los productos/servicios de LOGIKIA con soporte multilingüe ES/EN/FR,  siendo el ESPAÑOL el idioma por defecto.
 
 ## Objetivos Principales
 
@@ -13,7 +13,7 @@ Proyecto Logikia es el sitio web basado en la plantilla <https://github.com/mear
 
 ## Características Clave
 
-- Soporte multilingüe (inglés, español, francés, alemán, persa, japonés, chino simplificado)
+- Soporte multilingüe (español, inglés, francés)
 - Memory Bank implementada para gestión del conocimiento
 - Diseño responsive y experiencia de usuario optimizada
 - Integración con sitemap y SEO

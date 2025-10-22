@@ -122,8 +122,8 @@ const structuredData = {
     // Inicializar Preline UI usando HSAccordion global (ya disponible por MainLayout)
     // Usar timeout para asegurar que Preline esté completamente cargado
     setTimeout(() => {
-      if (typeof window.HSAccordion !== 'undefined') {
-        window.HSAccordion.autoInit();
+      if (typeof (window as any).HSAccordion !== 'undefined') {
+        (window as any).HSAccordion.autoInit();
       } else {
         // Fallback manual si HSAccordion no está disponible
         console.log('HSAccordion no disponible, usando funcionalidad básica');
@@ -152,7 +152,7 @@ const structuredData = {
     }, 100);
 
     // Crear structured data dinámico para SEO
-    const faqStructuredData = [];
+    const faqStructuredData: any[] = [];
     headings.forEach((heading, index) => {
       const question = heading.textContent?.trim() || '';
       let answer = '';
