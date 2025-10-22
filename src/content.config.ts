@@ -152,9 +152,18 @@ const insightsCollection = defineCollection({
   }),
 });
 
+const faqCollection = defineCollection({
+  loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/faq" }),
+  schema: z.object({
+    title: z.string(),
+    description: z.string().optional(),
+  }),
+});
+
 export const collections = {
   docs: defineCollection({ schema: docsSchema() }),
   'products': productsCollection,
   'blog': blogCollection,
   'insights': insightsCollection,
+  'faq': faqCollection, // ← Agregar nueva colección
 };
