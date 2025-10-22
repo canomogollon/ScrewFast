@@ -1,20 +1,43 @@
 ---
-title: "Enhancing Safety and Workmanship with ScrewFast Construction Services"
-description: "Quality construction services for lasting results"
-author: "Brad"
-authorImage: "@/images/blog/brad.avif"
-authorImageAlt: "Avatar Description"
-pubDate: 2024-02-10
+title: "SalesMind: IA Comercial que Transforma la Conversión de Ventas en Colombia"
+description: "Explora cómo SalesMind, el agente IA comercial de LOGIKIA, impulsa la productividad del equipo y revoluciona la atención al cliente 24/7."
+author: "Equipo LOGIKIA"
+authorImage: "@/images/blog/jacob.avif"
+authorImageAlt: "Equipo de desarrollo de LOGIKIA implementando IA"
+pubDate: 2025-02-03
 cardImage: "@/images/blog/post-2.avif"
-cardImageAlt: "Man in black sweatpants using DEWALT circular saw and cutting a wood plank"
-readTime: 5
-tags: ["safety", "craftsmanship", "management" ]
-contents: [
-        "When it comes to construction, safety and quality workmanship are non-negotiable. At ScrewFast, we're proud to offer a range of construction services that prioritize both, ensuring your projects are built to last.",
-        "Our team of skilled craftsmen brings precision and expertise to every job, from minor installations to large-scale structural work. With top-quality tools and materials from our extensive inventory, we guarantee the highest standards of safety and craftsmanship on every project.",
-        "But our commitment to excellence doesn't end there. We also provide thorough project management services to keep your build on track and within budget. From workflow coordination to stakeholder communication, ScrewFast handles the complexities so you can focus on your vision.",
-        "What sets ScrewFast apart is our dedication to ongoing support. We don't just finish the job and walk away—we're here for the long haul. Our maintenance services ensure that your construction remains in optimal condition, providing peace of mind for years to come.",
-        "For larger enterprise clients, we offer custom solutions tailored to your unique challenges. By understanding your specific needs, we engineer strategies aimed at maximizing efficiency and driving your business forward.",
-        "With ScrewFast construction services, you can trust that your projects are in good hands. Experience the difference today and see why so many clients choose ScrewFast for their construction needs."
-]
+cardImageAlt: "Agente IA comercial asistiendo a clientes online"
+readTime: 6
+tags: ["ventas", "automatizacion", "inteligencia-artificial", "colombia"]
+excerpt: "SalesMind redefine la gestión comercial con inteligencia artificial, automatizando la atención y aumentando la conversión sin perder el toque humano."
+category: "Casos de éxito"
+featured: true
+relatedTopics: ["SalesMind", "atencion-automatizada", "lead-inteligente"]
 ---
+
+## Una nueva forma de vender con IA
+
+El 2025 marca un punto de inflexión en la forma en que las empresas colombianas gestionan la venta y el servicio al cliente. **SalesMind**, el agente comercial de LOGIKIA, combina automatización y lenguaje natural para mantener la conexión humana, con disponibilidad permanente.
+
+### Lo que diferencia a SalesMind
+
+- **Atención inteligente** en web, WhatsApp y correo electrónico.  
+- **Generación automática de cotizaciones personalizadas.**  
+- **Notificaciones en tiempo real al equipo comercial.**  
+- **Entrenamiento adaptado a la voz de cada empresa.**
+
+### Caso de éxito: Sector Inmobiliario Colombiano
+
+Una inmobiliaria integró SalesMind para atender consultas y cotizar propiedades.  
+En solo 3 meses:
+
+- Redujo en **65%** los tiempos de respuesta.  
+- Aumentó su conversión de leads en **32%**.  
+- Liberó al equipo humano para labores estratégicas.
+
+## Más allá del chatbot: la IA conversacional contextual
+
+SalesMind entiende el contexto de la conversación, recordando intenciones y datos del cliente.  
+Su motor semántico personalizado garantiza respuestas coherentes, precisas y sin alucinaciones.
+
+**Transforma tu atención comercial hoy:** [Prueba SalesMind](https://logikia.co/contacto).

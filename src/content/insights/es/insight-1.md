@@ -1,42 +1,32 @@
 ---
-title: "The Future of Construction Technology"
-description: "Explore ScrewFast's pioneering role in revolutionizing construction through advanced technology and innovative solutions."
-cardImage: "@/images/insights/insight-1.avif"
-cardImageAlt: "Top view mechanical tools arrangement"
+title: "CONPES 4144: La Hoja de Ruta Nacional de Inteligencia Artificial en Colombia"
+description: "Conoce las claves, ejes estratégicos y el alcance del CONPES 4144, la política pública que define el desarrollo de la IA en Colombia hasta 2030."
+cardImage: "@/images/insights/insight-2.avif"
+cardImageAlt: "Reunión interministerial sobre políticas de IA en Colombia"
+excerpt: "El CONPES 4144 es la columna vertebral de la estrategia nacional de IA; apuesta por ética, gobernanza, talento, infraestructura y adopción tecnológica."
+category: "Gobierno y Regulación"
+tags: ["IA", "CONPES4144", "politica-publica", "colombia"]
+featured: true
+relatedTopics: ["ética IA", "gobierno-digital", "política nacional"]
 ---
 
-In the world of construction, where innovation meets practicality, ScrewFast stands as a beacon of pioneering advancements. For years, this company has been at the forefront of revolutionizing construction through its unwavering commitment to advanced technology and innovative solutions. From skyscrapers to bridges, ScrewFast has left an indelible mark on the industry, shaping the future of construction in ways once thought unimaginable.
+La aprobación del **CONPES 4144** en 2025 marcó un hito en la transformación digital de Colombia. Este documento es la política pública oficial que traza el norte de la inteligencia artificial en el país hasta el año 2030.
 
-## A Legacy of Innovation
+## Seis ejes estratégicos de la política
 
-Founded with a vision to redefine the norms of construction, ScrewFast embarked on a journey marked by relentless innovation. Since its inception, the company has continually pushed the boundaries of what is possible, introducing groundbreaking technologies that have transformed the way structures are built.
+- **Ética y Gobernanza:** Fortalecimiento de la regulación y vigilancia para un desarrollo responsable.
+- **Datos e Infraestructura:** Mejoras en capacidades tecnológicas y acceso a datos públicos y privados.
+- **Investigación, Desarrollo e Innovación (I+D+i):** Potenciación de la investigación y nuevas aplicaciones IA.
+- **Talento Digital y Capacidades Humanas:** Formación de talento colombiano para el diseño y uso ético de la IA.
+- **Mitigación de Riesgos:** Estrategias para reducir impactos indeseados y proteger derechos.
+- **Uso y Adopción en todos los sectores:** Promisión de implementación efectiva en lo público, empresarial y regional.
 
-## Reinventing Foundation Systems
+Con más de 100 acciones y una inversión de $479 mil millones, el **CONPES 4144** posiciona a Colombia como referente latinoamericano en desarrollo ético y competitivo de inteligencia artificial para beneficio social y económico.
 
-At the heart of ScrewFast's success lies its revolutionary approach to foundation systems. Traditionally, the process of laying foundations has been cumbersome and time-consuming, often requiring extensive excavation and manual labor. However, ScrewFast's innovative solutions have changed the game entirely.
+## ¿Por qué es relevante para empresas y startups?
 
-By leveraging advanced techniques such as helical pile installation, ScrewFast has streamlined the foundation process, significantly reducing both time and cost. These helical piles, with their screw-like design, offer unparalleled stability and can be installed with remarkable efficiency, making them the go-to choice for projects of all sizes.
+- Brinda claridad legal y acceso a incentivos gubernamentales.
+- Permite anticipar tendencias regulatorias y de mercado.
+- Fortalece la confianza y reputación al adherirse a estándares internacionales de IA responsable.
 
-## Embracing Digitalization
-
-In an era dominated by digitalization, ScrewFast has embraced technology wholeheartedly, harnessing its power to drive efficiency and precision. Through the use of advanced software and modeling techniques, the company has revolutionized the design and planning phases of construction projects.
-
-From 3D modeling to Building Information Modeling (BIM), ScrewFast employs cutting-edge tools to create detailed simulations of structures, allowing for better visualization and optimization. This digital approach not only enhances the accuracy of construction plans but also enables seamless collaboration among architects, engineers, and builders.
-
-## Sustainable Solutions for a Greener Tomorrow
-
-In a world increasingly concerned with sustainability, ScrewFast has taken proactive steps to minimize its environmental footprint. By prioritizing eco-friendly materials and sustainable construction practices, the company is leading the charge towards a greener future.
-
-One notable example is ScrewFast's commitment to modular construction—a method that involves prefabricating building components off-site and assembling them on-site. This approach not only reduces construction waste but also minimizes disruption to local ecosystems, making it a win-win for both builders and the environment.
-
-## The Road Ahead: Challenges and Opportunities
-
-As ScrewFast continues to push the boundaries of construction technology, it faces a myriad of challenges and opportunities on the horizon. From navigating regulatory hurdles to adapting to evolving industry trends, the road ahead is fraught with complexities.
-
-However, with its unwavering dedication to innovation and a track record of success, ScrewFast is well-positioned to overcome these obstacles and continue shaping the future of construction for generations to come. As the industry marches towards an increasingly digital and sustainable future, ScrewFast stands as a beacon of progress, leading the way towards a world where construction is not just efficient and cost-effective but also environmentally responsible.
-
-## Conclusion
-
-In the ever-evolving landscape of construction technology, ScrewFast remains a trailblazer, constantly pushing the boundaries of what is possible. Through its commitment to innovation, digitalization, and sustainability, the company has not only revolutionized the way structures are built but has also set a new standard for excellence in the industry.
-
-As we look towards the future, one thing is clear: the legacy of ScrewFast will continue to shape the world of construction for years to come, inspiring generations of builders to dream big and push the limits of possibility. With ScrewFast leading the way, the future of construction has never looked brighter.
+---
