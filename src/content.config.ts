@@ -117,12 +117,38 @@ const blogCollection = defineCollection({
 
 const insightsCollection = defineCollection({
   loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/insights" }),
-  schema: ({ image }) => z.object ({
-  title: z.string(),
-  description: z.string(),
-  // contents: z.array(z.string()),
-  cardImage: image(),
-  cardImageAlt: z.string(),
+  schema: ({ image }) => z.object({
+    // Campos obligatorios
+    title: z.string(),
+    description: z.string(),
+    cardImage: image(),
+    cardImageAlt: z.string(),
+    
+    // Campos opcionales para SEO/organización
+    excerpt: z.string().optional(),
+    category: z.string().optional(),
+    tags: z.array(z.string()).optional(),
+    featured: z.boolean().default(false),
+    relatedTopics: z.array(z.string()).optional(),
+    
+    // Campos específicos para insights
+    difficulty: z.enum(["beginner", "intermediate", "advanced"]).optional(),
+    estimatedReadTime: z.number().optional(),
+    
+    // Campos avanzados opcionales para SEO
+    seoKeywords: z.array(z.string()).optional(),
+    lastUpdated: z.date().optional(),
+    
+    // Campos para autoridad y credibilidad
+    sources: z.array(z.object({
+      title: z.string(),
+      url: z.string(),
+      type: z.enum(["article", "research", "whitepaper", "documentation"]).optional(),
+    })).optional(),
+    
+    // Metadatos adicionales
+    industry: z.array(z.string()).optional(), // ["IA", "tecnologia", "colombia"]
+    audience: z.array(z.string()).optional(), // ["empresarios", "desarrolladores", "ejecutivos"]
   }),
 });
 

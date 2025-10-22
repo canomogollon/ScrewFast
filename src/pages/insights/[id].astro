@@ -1,120 +1,209 @@
 ---
-// Import section components
-import { SITE } from "@data/constants";
-import MainLayout from "@/layouts/MainLayout.astro";
-import { Image } from "astro:assets";
-import { getCollection, render } from "astro:content";
+import { SITE } from '@data/constants';
+import MainLayout from '@/layouts/MainLayout.astro';
+import { Image } from 'astro:assets';
+import { getCollection, getEntry, render } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 
-// Use `getStaticPaths` to generate static routes for generated pages on build
+// ======================================================
+// 1. OPTIMIZACIÓN: Usar getEntry para el post actual (más eficiente)
+// ======================================================
 export async function getStaticPaths() {
-  const insightPosts = await getCollection("insights", ({ id }) =>
-    id.startsWith("en/")
-  );
-  return insightPosts.map((post) => {
-    const idWithoutLang = post.id.replace(/^en\//, ""); // Remove the "fr/" prefix
-    return {
-      params: { id: idWithoutLang },
-      props: { post },
-    };
-  });
+  const insightPosts = await getCollection('insights', ({ id }) => id.startsWith('es/'));
+  return insightPosts.map((post) => ({
+    params: { id: post.id.replace(/^es\//, '') },
+    props: { postId: post.id }, // Solo pasar el ID, no todo el objeto
+  }));
 }
 
-// Get the props for this page that define a specific insight post
-const { post } = Astro.props;
+const { postId } = Astro.props;
 
+// Usar getEntry es más eficiente que pasar todo el objeto
+const post = await getEntry('insights', postId);
+if (!post) {
+  return Astro.redirect('/404');
+}
+
+// Renderizar contenido solo cuando sea necesario
 const { Content } = await render(post);
 
-const pageTitle: string = `${post.data.title} | ${SITE.title}`;
-const metaDescription = post.data.description;
+// ======================================================
+// 2. METADATOS OPTIMIZADOS PARA SEO/AEO 2025
+// ======================================================
+const pageTitle = `${post.data.title} | Insights | ${SITE.title}`;
+const metaDescription = post.data.description || `Lee el insight "${post.data.title}" en LOGIKIA.`;
 const ogTitle = `${post.data.title} | Insights | ${SITE.title}`;
+
+// Manejar imagen de forma segura
+const ogImageUrl = post.data.cardImage
+  ? new URL(post.data.cardImage.src, Astro.site).href
+  : `${SITE.url}/images/default-og-insights.jpg`;
+
+// ======================================================
+// 3. STRUCTURED DATA OPTIMIZADO PARA INSIGHTS
+// ======================================================
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': `${SITE.url}/insights/${Astro.params.id}`,
+  headline: post.data.title,
+  description: post.data.excerpt || post.data.description,
+  image: {
+    '@type': 'ImageObject',
+    url: ogImageUrl,
+    width: 1200,
+    height: 630,
+  },
+  // Insights no tienen fecha de publicación específica (contenido evergreen)
+  author: {
+    '@type': 'Organization',
+    name: 'LOGIKIA',
+    url: SITE.url,
+  },
+  publisher: {
+    '@id': `${SITE.url}#organization`,
+  },
+  mainEntityOfPage: {
+    '@type': 'WebPage',
+    '@id': `${SITE.url}/insights/${Astro.params.id}`,
+  },
+  // Campos específicos mejorados
+  about: post.data.relatedTopics?.map((topic) => ({ '@type': 'Thing', name: topic })),
+  keywords: post.data.seoKeywords?.join(', ') || post.data.tags?.join(', '),
+  articleSection: post.data.category,
+  audience: {
+    '@type': 'Audience',
+    audienceType: post.data.audience?.join(', '),
+  },
+  // Referencias para credibilidad
+  citation: post.data.sources?.map((source) => ({
+    '@type': 'CreativeWork',
+    name: source.title,
+    url: source.url,
+  })),
+  dateModified: post.data.lastUpdated?.toISOString(),
+  inLanguage: 'es-CO',
+};
 ---
 
 <MainLayout
   title={pageTitle}
   customDescription={metaDescription}
   customOgTitle={ogTitle}
-  structuredData={{
-    "@context": "https://schema.org",
-    "@type": "Article",
-    headline: post.data.title,
-    description: metaDescription,
-    image: post.data.cardImage.src,
-    author: {
-      "@type": "Organization",
-      name: SITE.title,
-    },
-    publisher: {
-      "@type": "Organization",
-      name: SITE.title,
-      logo: {
-        "@type": "ImageObject",
-        url: "https://screwfast.uk/favicon.ico",
-      },
-    },
-    mainEntityOfPage: {
-      "@type": "WebPage",
-      "@id": `https://screwfast.uk/insights/${post.id.replace(/^en\//, "")}`,
-    },
-  }}
+  {structuredData}
 >
   <section class="py-6 sm:py-8 lg:py-12">
-    <div class="mx-auto max-w-(--breakpoint-xl) px-4 md:px-8">
+    <div class="mx-auto max-w-7xl px-4 md:px-8">
       <div class="grid gap-8 md:grid-cols-2 lg:gap-12">
+        <!-- Columna izquierda: Imagen y ToC -->
         <div>
+          <!-- Imagen principal del insight -->
           <div class="h-64 overflow-hidden rounded-lg shadow-lg md:h-auto">
             <Image
               class="h-full w-full object-cover object-center"
               src={post.data.cardImage}
               alt={post.data.cardImageAlt}
-              draggable={"false"}
-              format={"avif"}
+              draggable={'false'}
+              format={'avif'}
+              width={600}
+              height={400}
+              loading={'eager'}
             />
           </div>
+
+          <!-- Barra de progreso móvil -->
           <div
             id="progress-mobile"
-            class="fixed top-0 left-0 h-2 w-full bg-linear-to-r from-orange-400/30 to-orange-400 md:hidden"
+            class="from-primary/30 to-primary fixed top-0 left-0 z-50 h-2 w-full bg-gradient-to-r md:hidden"
           >
           </div>
+
+          <!-- ToC y barra de progreso desktop -->
           <div id="pin" class="mt-10 hidden space-y-4 md:block">
-            <div
-              class="h-px w-full overflow-hidden bg-neutral-300 dark:bg-neutral-700"
-            >
-              <div
-                id="progress"
-                class="h-px w-full bg-linear-to-r from-orange-400/30 to-orange-400"
-              >
+            <div class="h-px w-full overflow-hidden bg-neutral-300 dark:bg-neutral-700">
+              <div id="progress" class="from-primary/30 to-primary h-px w-full bg-gradient-to-r">
               </div>
             </div>
-            <p class="text-sm text-pretty text-neutral-500">
-              Table of Contents:
+            <p class="text-sm font-medium text-neutral-600 dark:text-neutral-400">
+              Tabla de Contenidos:
             </p>
             <div id="toc" class="">
               <ul
-                class="space-y-2 text-base text-pretty text-neutral-700 transition duration-300 dark:text-neutral-400"
+                class="space-y-2 text-base text-neutral-700 transition duration-300 dark:text-neutral-400"
               >
               </ul>
             </div>
           </div>
         </div>
 
+        <!-- Columna derecha: Contenido -->
         <div class="md:pt-8">
-          <h1
-            class="mb-4 text-center text-2xl font-bold text-balance text-neutral-800 sm:text-3xl md:mb-6 md:text-left dark:text-neutral-200"
-          >
-            {post.data.title}
-          </h1>
+          <!-- Header del insight -->
+          <header class="mb-8">
+            <!-- Categoría y tags -->
+            {
+              post.data.category && (
+                <span class="bg-primary/10 text-primary mb-4 inline-flex items-center rounded-full px-3 py-1 text-sm font-medium">
+                  {post.data.category}
+                </span>
+              )
+            }
 
-          <article
-            class="text-lg text-pretty text-neutral-700 dark:text-neutral-300"
-          >
+            <!-- Título principal -->
+            <h1
+              class="mb-4 text-2xl font-bold text-balance text-neutral-800 sm:text-3xl md:mb-6 dark:text-neutral-200"
+            >
+              {post.data.title}
+            </h1>
+
+            <!-- Descripción/excerpt -->
+            <p class="mb-6 text-lg text-pretty text-neutral-600 dark:text-neutral-400">
+              {post.data.description}
+            </p>
+
+            <!-- Tags -->
+            {
+              post.data.tags && post.data.tags.length > 0 && (
+                <div class="mb-6 flex flex-wrap gap-2">
+                  {post.data.tags.map((tag: string) => (
+                    <span class="inline-flex items-center rounded-lg bg-neutral-100 px-3 py-1 text-sm font-medium text-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )
+            }
+          </header>
+
+          <!-- Contenido principal del insight -->
+          <article class="prose dark:prose-invert md:prose-lg mb-10 max-w-none">
             <Content />
           </article>
+
+          <!-- Temas relacionados -->
+          {
+            post.data.relatedTopics && post.data.relatedTopics.length > 0 && (
+              <div class="mt-8 border-t border-neutral-200 pt-8 dark:border-neutral-700">
+                <h3 class="mb-4 text-lg font-semibold text-neutral-800 dark:text-neutral-200">
+                  Temas Relacionados
+                </h3>
+                <div class="flex flex-wrap gap-2">
+                  {post.data.relatedTopics.map((topic: string) => (
+                    <span class="bg-accent-green/10 text-accent-green dark:bg-accent-green-dark/10 dark:text-accent-green-dark inline-flex items-center rounded-lg px-3 py-1 text-sm font-medium">
+                      {topic}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )
+          }
         </div>
       </div>
     </div>
   </section>
 </MainLayout>
 
+<!-- Estilos globales optimizados -->
 <style is:global>
   :root {
     --transition-cubic: cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -124,6 +213,7 @@ const ogTitle = `${post.data.title} | Insights | ${SITE.title}`;
     scroll-behavior: smooth;
   }
 
+  /* Estilos mejorados para headers dentro del contenido */
   article h2,
   article h3,
   article h4,
@@ -132,36 +222,59 @@ const ogTitle = `${post.data.title} | Insights | ${SITE.title}`;
     font-weight: bold;
     margin-top: 2.5rem;
     scroll-margin-top: 3rem;
+    color: rgb(23 37 84 / var(--tw-text-opacity, 1)); /* text-neutral-800 */
   }
 
-  h2 {
+  .dark article h2,
+  .dark article h3,
+  .dark article h4,
+  .dark article h5,
+  .dark article h6 {
+    color: rgb(229 231 235 / var(--tw-text-opacity, 1)); /* dark:text-neutral-200 */
+  }
+
+  article h2 {
     font-size: 1.5rem;
     line-height: 2rem;
   }
 
-  h3 {
+  article h3 {
     font-size: 1.25rem;
     line-height: 1.75rem;
   }
 
-  h4 {
+  article h4 {
     font-size: 1.125rem;
     line-height: 1.75rem;
   }
 
-  p {
+  article p {
     margin-top: 1.5rem;
+    line-height: 1.75;
   }
 
+  article ul,
+  article ol {
+    margin-top: 1.5rem;
+    padding-left: 1.5rem;
+  }
+
+  article li {
+    margin-top: 0.5rem;
+  }
+
+  /* Estilos para ToC */
   #toc li {
     display: flex;
     align-items: center;
     opacity: 0.8;
     transition: all 300ms var(--transition-cubic);
+    padding: 0.5rem 0;
   }
 
   #toc li.selected {
     opacity: 1;
+    font-weight: 600;
   }
 
   #toc li svg {
@@ -175,28 +288,45 @@ const ogTitle = `${post.data.title} | Insights | ${SITE.title}`;
   #toc li.selected svg {
     width: 1.25rem;
     height: 1.25rem;
-    margin-right: 0.3rem;
+    margin-right: 0.5rem;
+  }
+
+  #toc a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 200ms ease;
+  }
+
+  #toc a:hover {
+    color: rgb(10 35 66); /* text-primary */
+  }
+
+  .dark #toc a:hover {
+    color: rgb(56 189 248); /* dark:text-primary-text */
   }
 </style>
 
+<!-- Scripts optimizados -->
 <script>
+  // ======================================================
+  // Barra de progreso de lectura
+  // ======================================================
   const onScroll = (): void => {
-    const article = document.querySelector("article");
+    const article = document.querySelector('article');
     if (!article) return;
 
     const articleHeight = article.offsetHeight;
     const articleOffsetTop = article.offsetTop;
-
     const scrollTop = window.scrollY || document.documentElement.scrollTop;
 
     if (articleHeight && articleOffsetTop && scrollTop) {
-      const progress =
-        ((scrollTop - articleOffsetTop) /
-          (articleHeight - window.innerHeight)) *
-        100;
+      const progress = Math.min(
+        Math.max(((scrollTop - articleOffsetTop) / (articleHeight - window.innerHeight)) * 100, 0),
+        100,
+      );
 
-      const progressBar = document.getElementById("progress");
-      const progressBarMobile = document.getElementById("progress-mobile");
+      const progressBar = document.getElementById('progress');
+      const progressBarMobile = document.getElementById('progress-mobile');
 
       if (progressBar && progressBarMobile) {
         progressBar.style.width = `${progress}%`;
@@ -205,90 +335,97 @@ const ogTitle = `${post.data.title} | Insights | ${SITE.title}`;
     }
   };
 
-  document.addEventListener("DOMContentLoaded", (event) => {
-    window.onscroll = onScroll;
-
-    // Set initial width of progress bar
-    const progressBar = document.getElementById("progress");
-    const progressBarMobile = document.getElementById("progress-mobile");
-
-    if (progressBar && progressBarMobile) {
-      progressBar.style.width = "0%";
-      progressBarMobile.style.width = "0%";
-    }
+  document.addEventListener('DOMContentLoaded', () => {
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll(); // Llamada inicial
   });
 </script>
+
 <script>
-  import { gsap } from "gsap";
-  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  // ======================================================
+  // Tabla de contenidos automática y navegación
+  // ======================================================
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
   gsap.registerPlugin(ScrollTrigger);
 
+  // Pin del ToC en desktop
   gsap.timeline({
     scrollTrigger: {
       scrub: 1,
       pin: true,
-      trigger: "#pin",
-      start: "top 20%",
-      endTrigger: "footer",
-      end: "top bottom",
+      trigger: '#pin',
+      start: 'top 20%',
+      endTrigger: 'footer',
+      end: 'top bottom',
     },
   });
 
   const SVG_HTML_STRING =
-    '<svg class="w-0 h-0 flex-none" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#fa5a15"><path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></svg>';
+    '<svg class="w-0 h-0 flex-none" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m12.75 15 3-3m0 0-3-3m3 3h-7.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"></svg>';
 
   function setActiveLinkById(id: string | null) {
-    const listItems = document.querySelectorAll("#toc li");
-    listItems.forEach((item) => item.classList.remove("selected"));
+    const listItems = document.querySelectorAll('#toc li');
+    listItems.forEach((item) => item.classList.remove('selected'));
 
     if (!id) return;
 
     const activeLink = document.querySelector(`#toc a[href="#${id}"]`);
-
     if (!activeLink) return;
 
     const listItem = activeLink.parentElement;
-    listItem?.classList.add("selected");
+    listItem?.classList.add('selected');
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    // The article element that contains the Markdown content
-    const article: HTMLElement | null = document.querySelector("article");
-    // The ToC container <ul> element
-    const tocList: HTMLElement | null = document.querySelector("#toc ul");
+  document.addEventListener('DOMContentLoaded', function () {
+    const article: HTMLElement | null = document.querySelector('article');
+    const tocList: HTMLElement | null = document.querySelector('#toc ul');
 
-    const headings: NodeListOf<HTMLElement> | [] = article
-      ? article.querySelectorAll("h1, h2, h3, h4, h5, h6")
-      : [];
+    const headings: NodeListOf<HTMLElement> = article
+      ? article.querySelectorAll('h2, h3, h4, h5, h6')
+      : document.querySelectorAll([]);
 
     headings.forEach((heading, i) => {
       if (heading instanceof HTMLElement) {
-        const listItem = document.createElement("li");
-        listItem.className = "toc-level-" + heading.tagName.toLowerCase();
+        // Generar ID si no existe
+        if (!heading.id) {
+          heading.id =
+            heading.textContent
+              ?.toLowerCase()
+              .replace(/[^a-z0-9]+/g, '-')
+              .replace(/(^-|-$)/g, '') || `heading-${i}`;
+        }
 
-        const tempDiv = document.createElement("div");
+        const listItem = document.createElement('li');
+        listItem.className = `toc-level-${heading.tagName.toLowerCase()}`;
+
+        const tempDiv = document.createElement('div');
         tempDiv.innerHTML = SVG_HTML_STRING;
 
         const svg = tempDiv.firstChild;
-        listItem.appendChild(svg as Node);
+        if (svg) listItem.appendChild(svg as Node);
 
-        const link = document.createElement("a");
-        link.href = "#" + heading.id;
+        const link = document.createElement('a');
+        link.href = '#' + heading.id;
         link.textContent = heading.textContent;
         listItem.appendChild(link);
 
         tocList?.appendChild(listItem);
 
+        // ScrollTrigger para activar el link correspondiente
         gsap.timeline({
           scrollTrigger: {
             trigger: heading,
-            start: "top 20%",
+            start: 'top 20%',
             end: () =>
-              `bottom top+=${i === headings.length - 1 ? 0 : (headings[i + 1] as HTMLElement).getBoundingClientRect().height}`,
+              `bottom top+=${
+                i === headings.length - 1
+                  ? 0
+                  : (headings[i + 1] as HTMLElement).getBoundingClientRect().height
+              }`,
             onEnter: () => setActiveLinkById(heading.id),
-            onLeaveBack: () =>
-              setActiveLinkById((headings[i - 1] as HTMLElement)?.id),
+            onLeaveBack: () => setActiveLinkById((headings[i - 1] as HTMLElement)?.id || null),
           },
         });
       }

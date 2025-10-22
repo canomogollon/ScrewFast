@@ -8,6 +8,16 @@ category: "Gobierno y Regulación"
 tags: ["IA", "CONPES4144", "politica-publica", "colombia"]
 featured: true
 relatedTopics: ["ética IA", "gobierno-digital", "política nacional"]
+difficulty: "intermediate"
+estimatedReadTime: 12
+industry: ["gobierno", "tecnologia", "IA"]
+audience: ["empresarios", "funcionarios-publicos", "desarrolladores"]
+sources:
+  - title: "CONPES 4144 - Documento Oficial"
+    url: "https://colaboracion.dnp.gov.co/CDT/Conpes/Econ%C3%B3micos/4144.pdf"
+    type: "documentation"
+seoKeywords: ["CONPES 4144", "inteligencia artificial Colombia", "política pública IA"]
+lastUpdated: 2025-01-15
 ---
 
 La aprobación del **CONPES 4144** en 2025 marcó un hito en la transformación digital de Colombia. Este documento es la política pública oficial que traza el norte de la inteligencia artificial en el país hasta el año 2030.
