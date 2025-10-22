@@ -1,0 +1,74 @@
+---
+import MainLayout from '@/layouts/MainLayout.astro';
+import { SITE } from '@data/constants';
+
+const pageTitle = `Quiénes Somos | ${SITE.title}`;
+const customDescription =
+  'Conoce la misión, visión y objetivos de Logikia, tu aliado en la transformación digital responsable con Inteligencia Artificial.';
+
+const mision = {
+  title: 'Misión',
+  content:
+    'Empoderar a profesionales y organizaciones en Colombia a través de Agentes de Inteligencia Artificial personalizados que proporcionan información precisa, ética y contextualizada, sin alucinaciones, adaptándose a los retos locales y sectoriales. LOGIKIA integra la inteligencia artificial de manera fluida y confiable en los procesos de sus clientes, eliminando riesgos informativos y potenciando la toma de decisiones estratégicas con datos verificados y actualizados. Buscamos ser aliados clave en la transformación digital responsable, impulsando el crecimiento y la innovación a través de tecnología transparente y útil, adaptada a las necesidades reales de nuestro entorno.',
+};
+
+const vision = {
+  title: 'Visión',
+  content:
+    'LOGIKIA aspira a consolidarse como la empresa líder en el desarrollo y despliegue de Agentes de Inteligencia Artificial confiables en Colombia y América Latina, transformando sectores clave como el jurídico y comercial. Visualizamos un futuro donde la IA es sinónimo de precisión, transparencia y responsabilidad social, facilitando cadenas de valor inteligentes, éticas y sostenibles. Nuestra meta es impulsar ecosistemas digitales donde la excelencia operacional, la inclusión, la sostenibilidad y la seguridad informativa sean pilares de competitividad, siempre comprometidos con la integridad y el impacto positivo en la sociedad colombiana.',
+};
+
+const objetivos = {
+  title: 'Objetivos',
+  items: [
+    'Impulsar la adopción ética y confiable de la inteligencia artificial en el contexto profesional y empresarial colombiano, alineada con la normativa y buenas prácticas internacionales.',
+    'Ofrecer soluciones especializadas de IA que erradiquen el riesgo de información errónea (alucinaciones), fortaleciendo la confianza en la automatización y la toma de decisiones asistidas por tecnologías avanzadas.',
+    'Desarrollar capacidades locales de innovación tecnológica y transferencia de conocimiento, articulando alianzas con academia, industria y sector público para una transformación digital inclusiva y sostenible.',
+  ],
+};
+---
+
+<MainLayout title={pageTitle} {customDescription}>
+  <div class="mx-auto max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+    <!-- Title -->
+    <div class="mx-auto mb-10 max-w-2xl text-center lg:mb-14">
+      <h1 class="text-2xl font-bold md:text-4xl md:leading-tight dark:text-white">Quiénes Somos</h1>
+      <p class="mt-1 text-neutral-600 dark:text-neutral-400">
+        Nuestra razón de ser y el futuro que construimos.
+      </p>
+    </div>
+    <!-- End Title -->
+
+    <div class="space-y-10 lg:space-y-16">
+      <!-- Misión Section -->
+      <div class="mx-auto max-w-3xl">
+        <div class="mb-5">
+          <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200">{mision.title}</h2>
+        </div>
+        <p class="text-lg text-neutral-600 dark:text-neutral-400">{mision.content}</p>
+      </div>
+
+      <!-- Visión Section -->
+      <div class="mx-auto max-w-3xl">
+        <div class="mb-5">
+          <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200">{vision.title}</h2>
+        </div>
+        <p class="text-lg text-neutral-600 dark:text-neutral-400">{vision.content}</p>
+      </div>
+
+      <!-- Objetivos Section -->
+      <div class="mx-auto max-w-3xl">
+        <div class="mb-5">
+          <h2 class="text-3xl font-bold text-neutral-800 dark:text-neutral-200">
+            {objetivos.title}
+          </h2>
+        </div>
+        <ul
+          class="list-outside list-disc space-y-5 ps-5 text-lg text-neutral-600 dark:text-neutral-400"
+        >
+          {objetivos.items.map((item) => <li class="ps-2">{item}</li>)}
+        </ul>
+      </div>
+    </div>
+  </div>
+</MainLayout>
