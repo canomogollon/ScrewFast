@@ -6,6 +6,7 @@ import starlight from "@astrojs/starlight";
 
 import mdx from "@astrojs/mdx";
 
+// REview to  work in github page
 // https://astro.build/config
 export default defineConfig({
   // https://docs.astro.build/en/guides/images/#authorizing-remote-images
