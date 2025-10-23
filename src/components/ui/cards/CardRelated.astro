@@ -14,9 +14,11 @@ interface Props {
 
 <a
   class="group block rounded-xl ring-zinc-500 outline-hidden transition duration-300 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden"
-  href={recentBlogLocale && recentBlogLocale !== 'es'
-    ? `/${recentBlogLocale}/blog/${blogEntry.id.replace(/^fr\//, '')}/`
-    : `/blog/${blogEntry.id.replace(/^es\//, '')}/`}
+  href={`${import.meta.env.BASE_URL}${
+    recentBlogLocale && recentBlogLocale !== 'es'
+      ? `/${recentBlogLocale}/blog/${blogEntry.id.replace(/^fr\//, '')}/`
+      : `/blog/${blogEntry.id.replace(/^es\//, '')}/`
+  }`}
   data-astro-prefetch
 >
   <div>

@@ -75,7 +75,9 @@ interface PricingSectionProps {
       </ul>
       <!-- CTA for purchasing the product -->
       <a
-        href={pricing.starterKit.purchaseLink}
+        href={pricing.starterKit.purchaseLink
+          ? `${import.meta.env.BASE_URL}${pricing.starterKit.purchaseLink.startsWith('/') ? pricing.starterKit.purchaseLink : `/${pricing.starterKit.purchaseLink}`}`
+          : undefined}
         class="block rounded-lg bg-gray-500 px-8 py-3 text-center text-sm font-bold text-gray-100 ring-indigo-300 outline-hidden transition duration-100 hover:bg-gray-600 focus-visible:ring-3 active:text-gray-300 md:text-base"
         >{pricing.starterKit.purchaseBtnTitle}</a
       >
@@ -117,7 +119,9 @@ interface PricingSectionProps {
       </ul>
       <!-- CTA for purchasing the product -->
       <a
-        href={pricing.professionalToolbox.purchaseLink}
+        href={pricing.professionalToolbox.purchaseLink
+          ? `${import.meta.env.BASE_URL}${pricing.professionalToolbox.purchaseLink.startsWith('/') ? pricing.professionalToolbox.purchaseLink : `/${pricing.professionalToolbox.purchaseLink}`}`
+          : undefined}
         class="bg-opacity-50 block rounded-lg bg-orange-200/40 px-8 py-3 text-center text-sm font-bold text-neutral-100 ring-orange-300 outline-hidden transition duration-300 hover:bg-orange-300 focus-visible:ring-3 active:bg-orange-400 md:text-base"
         >{pricing.professionalToolbox.purchaseBtnTitle}</a
       >

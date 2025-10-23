@@ -48,6 +48,7 @@
 - **Vite:** Herramienta de "build" y servidor de desarrollo que proporciona un feedback rápido durante el desarrollo.
 - **TypeScript:** Añade tipado estático a JavaScript para mejorar la robustez y mantenibilidad del código.
 - **ESLint y Prettier:** Para el "linting" y formateo del código, asegurando un estilo de código consistente.
+- **`src/utils/permalinks.ts`**: Un helper personalizado que utiliza `import.meta.env.BASE_URL` para construir URLs absolutas correctas, asegurando que los enlaces funcionen en despliegues de subdirectorio.
 
 ## SEO y Optimización
 

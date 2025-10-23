@@ -3,23 +3,23 @@ import MainLayout from '@/layouts/MainLayout.astro';
 import ContactSection from '@components/sections/misc/ContactSection.astro';
 import { SITE } from '@data/constants';
 
-const pageTitle = `Contacto | LOGIKIA IA Confiable`;
+const pageTitle = `Contacto | ${SITE.title}`;
 const metaDescription =
   '¿Tienes preguntas o deseas conocer cómo la inteligencia artificial confiable puede transformar tu empresa? Contáctanos y descubre soluciones personalizadas en IA para el contexto colombiano.';
-const ogTitle = 'Contáctanos | LOGIKIA IA Confiable';
+const ogTitle = `Contáctanos | ${SITE.title}`;
 
 const contactInfo = {
   knowledgebase: {
     heading: 'Base de Conocimiento',
     content: 'Consulta todos nuestros artículos y guías detalladas.',
     linkTitle: 'Visitar guías y tutoriales',
-    linkURL: '/base-de-conocimiento',
+    linkURL: `${import.meta.env.BASE_URL}/base-de-conocimiento`,
   },
   faq: {
     heading: 'Preguntas frecuentes',
     content: 'Resuelve tus dudas con nuestra sección FAQ clara y práctica.',
     linkTitle: 'Ir a preguntas frecuentes',
-    linkURL: '/faq',
+    linkURL: `${import.meta.env.BASE_URL}/faq`,
   },
   office: {
     heading: 'Visítanos',

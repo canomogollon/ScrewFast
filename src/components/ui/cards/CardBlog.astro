@@ -4,7 +4,6 @@ import AvatarBlog from '@components/ui/avatars/AvatarBlog.astro';
 import { Image } from 'astro:assets';
 import { formatDate } from '@utils/utils';
 import type { CollectionEntry } from 'astro:content';
-
 const { blogEntry, blogLocale = '' } = Astro.props;
 
 interface Props {
@@ -19,9 +18,11 @@ interface Props {
      which automatically prefetches the linked page to speed up navigation. -->
 <a
   class="group relative block rounded-xl ring-zinc-500 outline-hidden transition duration-500 focus-visible:ring-3 dark:ring-zinc-200 dark:focus:outline-hidden"
-  href={blogLocale && blogLocale !== 'es'
-    ? `/${blogLocale}/blog/${blogEntry.id.replace(/^fr\//, '')}/`
-    : `/blog/${blogEntry.id.replace(/^es\//, '')}/`}
+  href={`${import.meta.env.BASE_URL}${
+    blogLocale && blogLocale !== 'es'
+      ? `/${blogLocale}/blog/${blogEntry.id.replace(/^fr\//, '')}/`
+      : `/blog/${blogEntry.id.replace(/^es\//, '')}/`
+  }`}
   data-astro-prefetch
 >
   <!-- The container for the blog post's cover image. Uses astro:assets' Image for image source -->

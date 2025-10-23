@@ -3,7 +3,6 @@
 import { Image } from 'astro:assets';
 import Icon from '@components/ui/icons/Icon.astro';
 import type { CollectionEntry } from 'astro:content';
-
 const { product, productLocale = '' } = Astro.props;
 
 interface Props {
@@ -18,9 +17,11 @@ const imageClass =
 
 <!-- The anchor tag is the main container for the product card. When clicked, this leads to the details of the product. -->
 <a
-  href={productLocale && productLocale !== 'es'
-    ? `/${productLocale}/products/${product.id.replace(/^fr\//, '')}/`
-    : `/products/${product.id.replace(/^es\//, '')}/`}
+  href={`${import.meta.env.BASE_URL}${
+    productLocale && productLocale !== 'es'
+      ? `/${productLocale}/products/${product.id.replace(/^fr\//, '')}/`
+      : `/products/${product.id.replace(/^es\//, '')}/`
+  }`}
   data-astro-prefetch
   class="group relative flex h-48 items-end overflow-hidden rounded-lg shadow-xl ring-zinc-500 outline-hidden focus-visible:ring-3 md:col-span-2 md:h-80 dark:ring-zinc-200 dark:focus:outline-hidden"
 >

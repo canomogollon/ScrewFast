@@ -26,6 +26,14 @@ La arquitectura del proyecto Logikia se basa en la plantilla "ScrewFast", que ut
 4. **Estilos:** Tailwind CSS se utiliza para estilizar los componentes, proporcionando un sistema de clases de utilidad.
 5. **Interactividad:** El JavaScript del lado del cliente se maneja a través de las islas de Astro, asegurando que solo se envíe el JS necesario al navegador.
 
+## Manejo de URLs para Despliegue en Subdirectorios
+
+Para asegurar que los enlaces funcionen correctamente cuando el sitio se despliega en un subdirectorio (ej. `https://usuario.github.io/repo/`), se ha implementado un patrón centralizado:
+
+- **`astro.config.mjs`**: Las propiedades `site` y `base` deben estar correctamente configuradas para el entorno de producción.
+- **`src/utils/permalinks.ts`**: Se ha creado un helper `getPermalink(url)` que utiliza `import.meta.env.BASE_URL` para construir las URLs absolutas correctas.
+- **Componentes**: Todos los componentes que generan enlaces internos (`<a>` con `href`) deben usar el helper `getPermalink` para asegurar que la ruta base se incluya en el `href` final. Esto es crucial porque Astro no procesa automáticamente los `href` hardcodeados dentro de los componentes.
+
 ## Adaptación para Logikia
 
 - **Personalización de Componentes:** Los componentes de la plantilla en `src/components/` serán modificados para reflejar la marca, el contenido y la funcionalidad de Logikia.

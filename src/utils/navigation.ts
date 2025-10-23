@@ -1,27 +1,29 @@
+const base = import.meta.env.BASE_URL;
+
 // An array of links for navigation bar
 const navBarLinks = [
-  { name: "Inicio", url: "/" },
-  { name: "Productos", url: "/products" },
-  { name: "Servicios", url: "/services" },
-  { name: "Blog", url: "/blog" },
-  { name: "Contacto", url: "/contact" },
+  { name: "Inicio", url: `${base}` },
+  { name: "Productos", url: `${base}/products` },
+  { name: "Servicios", url: `${base}/services` },
+  { name: "Blog", url: `${base}/blog` },
+  { name: "Contacto", url: `${base}/contact` },
 ];
 // An array of links for footer
 const footerLinks = [
   {
     section: "Ecosistema",
     links: [
-      { name: "Documentacion", url: "/welcome-to-docs/" },
-      { name: "Agentes de I.A", url: "/products" },
-      { name: "Servicios de I.A", url: "/services" },
+      { name: "Documentacion", url: `${base}/welcome-to-docs/` },
+      { name: "Agentes de I.A", url: `${base}/products` },
+      { name: "Servicios de I.A", url: `${base}/services` },
     ],
   },
   {
     section: "Empresa",
     links: [
-      { name: "Quiénes Somos", url: "/about-us" },
-      { name: "Blog", url: "/blog" },
-      { name: "FAQs", url: "/faq" },
+      { name: "Quiénes Somos", url: `${base}/about-us` },
+      { name: "Blog", url: `${base}/blog` },
+      { name: "FAQs", url: `${base}/faq` },
       //{ name: "Careers", url: "#" },
       //{ name: "Customers", url: "#" },
     ],
