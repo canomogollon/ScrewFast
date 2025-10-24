@@ -21,23 +21,23 @@ El 2025 marca un punto de inflexión en la forma en que las empresas colombianas
 
 ### Lo que diferencia a SalesMind
 
-- **Atención inteligente** en web, WhatsApp y correo electrónico.  
-- **Generación automática de cotizaciones personalizadas.**  
-- **Notificaciones en tiempo real al equipo comercial.**  
+- **Atención inteligente** en web, WhatsApp y correo electrónico.
+- **Generación automática de cotizaciones personalizadas.**
+- **Notificaciones en tiempo real al equipo comercial.**
 - **Entrenamiento adaptado a la voz de cada empresa.**
 
-### Caso de éxito: Sector Inmobiliario Colombiano
+### Proyección de Impacto: Sector Inmobiliario
 
-Una inmobiliaria integró SalesMind para atender consultas y cotizar propiedades.  
-En solo 3 meses:
+Imagina este escenario para una inmobiliaria: SalesMind se integra para atender consultas y cotizar propiedades 24/7.
+Nuestras proyecciones de ROI estiman que en los primeros 3 meses de operación se puede lograr:
 
-- Redujo en **65%** los tiempos de respuesta.  
-- Aumentó su conversión de leads en **32%**.  
-- Liberó al equipo humano para labores estratégicas.
+- Una **reducción proyectada del 60% al 80%** en el tiempo dedicado a consultas de contacto inicial.
+- Un **incremento estimado del 30%** en la captura de leads calificados.
+- La liberación del equipo humano para que se enfoque en el cierre de ventas y las labores estratégicas.
 
 ## Más allá del chatbot: la IA conversacional contextual
 
-SalesMind entiende el contexto de la conversación, recordando intenciones y datos del cliente.  
-Su motor semántico personalizado garantiza respuestas coherentes, precisas y sin alucinaciones.
+SalesMind entiende el contexto de la conversación, recordando intenciones y datos del cliente.
+Su motor semántico personalizado, entrenado con los documentos de tu empresa, garantiza respuestas coherentes, precisas y sin alucinaciones.
 
-**Transforma tu atención comercial hoy:** [Prueba SalesMind](https://logikia.co/contacto).
+**Transforma tu atención comercial hoy:** [Agenda una demostración de SalesMind](https://logikia.co/contacto).

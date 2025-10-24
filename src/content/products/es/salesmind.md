@@ -1,6 +1,6 @@
 ---
 title: "SalesMind"
-description: "SalesMind: El agente comercial de LOGIKIA para Colombia. Automatiza la atención 24/7, genera cotizaciones y califica leads en web y WhatsApp. Reduce costos operativos hasta un 80%."
+description: "SalesMind: El agente comercial de LOGIKIA para Colombia. Automatiza la atención 24/7, genera cotizaciones y califica leads en web y WhatsApp."
 main:
   id: 1
   content: |

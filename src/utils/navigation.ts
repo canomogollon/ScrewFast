@@ -13,7 +13,7 @@ const footerLinks = [
   {
     section: "Ecosistema",
     links: [
-      { name: "Documentacion", url: `${base}/welcome-to-docs/` },
+//      { name: "Documentación", url: `${base}/welcome-to-docs/` },
       { name: "Agentes de I.A", url: `${base}/products` },
       { name: "Servicios de I.A", url: `${base}/services` },
     ],
@@ -33,7 +33,7 @@ const footerLinks = [
 const socialLinks = {
   facebook: "https://www.facebook.com/",
   x: "https://twitter.com/",
-  github: "https://github.com/mearashadowfax/ScrewFast",
+//  github: "https://github.com/mearashadowfax/ScrewFast",
   google: "https://www.google.com/",
   slack: "https://slack.com/",
 };

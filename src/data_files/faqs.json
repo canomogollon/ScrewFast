@@ -1,5 +1,5 @@
 {
-  "subTitle": "Consultanos sobre nuestros servicios y  productos, y obtén respuestas precisas.",
+  "subTitle": "Consúltanos sobre nuestros servicios y  productos, y obtén respuestas precisas.",
   "faqs": [
     {
       "question": "¿Qué es LOGIKIA?",
@@ -7,15 +7,15 @@
     },
     {
       "question": "¿Qué diferencia a LOGIKIA de otras IA como ChatGPT?",
-      "answer": "Nuestro enfoque es la precisión sobre la creatividad. Mientras otras IA pueden inventar respuestas, nuestros agentes están diseñados para dar información basada en hechos y fuentes verificables, garantizando datos 100% auditables."
+      "answer": "Nuestro enfoque es la precisión y la veracidad de la información otorgada a su cliente. Para lograrlo, nuestros agentes están diseñados para aprender de fuentes verificables y confiables, garantizando datos 100% auditables."
     },
     {
       "question": "¿Cómo funciona el agente LawMind?",
-      "answer": "Es un asistente jurídico entrenado con el corpus legal colombiano. Permite a los abogados hacer consultas y recibir respuestas rápidas citando siempre la fuente legal exacta, garantizando total trazabilidad."
+      "answer": "Es un asistente jurídico entrenado con la legislación colombiana, que permite a los abogados hacer consultas y recibir respuestas rápidas, siempre citando la fuente legal precisa y aplicable, garantizando total trazabilidad."
     },
     {
       "question": "¿LawMind entrega fuentes legales verificadas?",
-      "answer": "Cada respuesta incluye la norma colombiana consultada y su referencia exacta para trazabilidad y uso profesional."
+      "answer": "Cada respuesta incluye la norma colombiana consultada y su referencia exacta, para trazabilidad y uso profesional."
     },
     {
       "question": "¿Qué hace el agente SalesMind?",

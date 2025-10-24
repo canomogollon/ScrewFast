@@ -1,6 +1,6 @@
 ---
 title: "LawMind"
-description: "LawMind: Asistente Legal IA para abogados en Colombia. Consultas jurídicas instantáneas sobre leyes y jurisprudencia, 100% confiable y sin alucinaciones. Analiza archivos privados y asiste en redacción."
+description: "LawMind: Asistente Legal IA para abogados en Colombia. Consultas jurídicas instantáneas sobre leyes y jurisprudencia, 100% confiable y sin información falsa. Analiza archivos privados y asiste en redacción."
 main:
   id: 2
   content: |
@@ -26,7 +26,7 @@ longDescription:
   btnURL: "/contacto"
 descriptionList:
   - title: "Preguntas y Respuestas al Instante"
-    subTitle: "Consulta leyes, decretos o sentencias en lenguaje natural. Recibe respuestas exactas y actualizadas con su fundamento legal, sin alucinaciones."
+    subTitle: "Consulta leyes, decretos o sentencias en lenguaje natural. Recibe respuestas exactas y actualizadas con su fundamento legal, sin información falsa."
   - title: "Tu Archivo Privado (Seguridad Total)"
     subTitle: "Sube tus archivos (casos, contratos, memoriales) a tu 'caja fuerte digital'. LawMind aprende de ellos y responde preguntas basándose únicamente en tu información."
   - title: "Asistente de Redacción Inteligente"

@@ -1,16 +1,16 @@
 {
   "title": "Acceso a soluciones de IA asequibles y escalables",
   "subTitle": "Un precio lógico para una inteligencia superior a tu servicio",
-  "badge": "Obten tu agente",
+  "badge": "Obtén tu agente",
   "thirdOption": "¿Agente personalizado?",
   "thirdOptionLink": "/contact",
   "btnText": "Obtener una cotización",
 
   "starterKit": {
-    "name": "Soporte y Operación Mensual",
-    "description": "Sostenimiento Mensual I.A",
+    "name": "Soporte y operación mensual",
+    "description": "Sostenimiento mensual I.A",
     "price": "900.000",
-    "cents": ".00",
+    "cents": "",
     "billingFrequency": "COP / Mensualidad",
     "features": [
       "Actualizaciones de la base de conocimiento",
@@ -25,15 +25,15 @@
     "name": "Instalación y Entrenamiento Inicial",
     "description": "Inicialización del Agente I.A personalizado para su organización",
     "price": "3'000.000",
-    "cents": ".00",
-    "billingFrequency": "COP / Unico pago",
+    "cents": "",
+    "billingFrequency": "COP / Único pago",
     "features": [
       "Análisis de sus fuentes de datos.",
       "Personalización del agente (LawMind o SalesMind)",
-      "Instalacion y configuracion tecnica del agente.",
+      "Instalación y configuración técnica del agente.",
       "Entrenamiento del modelo para alinearlo con sus objetivos de negocio.",
-      "Integracion con sus canales de comunicación (Web, WhatsApp, Telegram, etc).",
-      "Capacitacion para su equipo en el uso y mantenimiento del agente."
+      "Integración con sus canales de comunicación (Web, WhatsApp, Telegram, etc).",
+      "Capacitación para su equipo en el uso y mantenimiento del agente."
     ],
     "purchaseBtnTitle": "Saber más",
     "purchaseLink": "/contact"
